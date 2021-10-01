@@ -148,3 +148,34 @@ Right now we support only Invite user by email
 ## An User should be able to cancel a team from a Stripe Plan
 ## An User should be able to change a team to a different Stripe Plan
 ## An User should be able to change the team name and profile picture
+
+
+
+-----------
+
+DB Tables:
+
+
+### teams
+
+- uuid
+- tenant
+- name
+- slug
+- creator_user_uuid
+- created_at
+- updated_at
+- deleted_at
+
+### team_members
+
+- member_uuid
+- team_uuid
+- user_uuid
+- email
+- status (invited, accepted, rejected)
+- role (member, owner)
+- created_at
+- updated_at
+- deleted_at
+
