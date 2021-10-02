@@ -6,8 +6,9 @@ if (process.env.ENVFILE) {
 const executeStrategy = require("./core/executeStrategy");
 
 global.endpointStrategy = executeStrategy([
-  "authorize",
   "prepare",
+  "*augmentPrepare",
+  "authorize",
   "handle",
   "respond",
 ]);

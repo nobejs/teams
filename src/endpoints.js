@@ -9,7 +9,10 @@ module.exports = (app) => {
 
   return [
     {
-      endpoints: [["post", "/teams", "teams/AnUserShouldBeAbleToCreateATeam"]],
+      endpoints: [
+        ["post", "/teams", "teams/AnUserShouldBeAbleToCreateATeam"],
+        ["put", "/teams/:uuid", "teams/AnUserShouldBeAbleToUpdateATeam"],
+      ],
     },
   ];
 };
