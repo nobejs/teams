@@ -19,7 +19,7 @@
   - tenant
   - name
   - slug
-  - user_uuid
+  - creator_user_uuid
 
   ### Authorize
 
@@ -28,6 +28,7 @@
   ### Handle
 
   - Team name and Slug should be unique
+  - Add to team member as owner
 
   ### Respond
 
@@ -169,7 +170,7 @@ DB Tables:
 
 ### team_members
 
-- member_uuid
+- uuid
 - team_uuid
 - user_uuid
 - email
