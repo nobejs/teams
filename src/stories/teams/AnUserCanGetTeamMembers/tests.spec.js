@@ -1,9 +1,9 @@
-const knex = require("../../../../database/knex");
+const knex = requireKnex();
 
 describe("Handler AnUserShouldBeAbleToGetTheirTeamMembers", () => {
   beforeEach(async () => {
-    knex("teams").truncate();
-    knex("teams_members").truncate();
+    await knex("teams").truncate();
+    await knex("team_members").truncate();
   });
 
   it("Outsider shouldnt be able access a team members", async () => {
@@ -43,15 +43,15 @@ describe("Handler AnUserShouldBeAbleToGetTheirTeamMembers", () => {
     try {
       team1 = await requireTestFunction("createTeamViaHandler")({
         tenant: "handler-test",
-        name: "Rajiv's member Team",
-        slug: "rajiv-member-team",
+        name: "Rajiv's personal Team",
+        slug: "rajiv-personal-team",
         creator_user_uuid: "1098c53c-4a86-416b-b5e4-4677b70f5dfa",
       });
 
       team2 = await requireTestFunction("createTeamViaHandler")({
         tenant: "handler-test",
-        name: "Rajiv's member Team 2",
-        slug: "rajiv-member-team-2",
+        name: "Rajiv's personal Team 2",
+        slug: "rajiv-personal-team-2",
         creator_user_uuid: "54c2779a-7200-4d98-be14-d4aec12b2fa9",
       });
 

@@ -1,9 +1,9 @@
-const knex = require("../../../../database/knex");
+const knex = requireKnex();
 
 describe("Handler AnUserShouldBeAbleToUpdateATeam", () => {
   beforeEach(async () => {
-    knex("teams").truncate();
-    knex("teams_members").truncate();
+    await knex("teams").truncate();
+    await knex("team_members").truncate();
   });
 
   it("an user can update a team", async () => {

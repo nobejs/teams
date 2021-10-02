@@ -1,5 +1,6 @@
 const contextClassRef = requireTestFunction("contextHelper");
 const randomUser = requireUtil("randomUser");
+const knex = requireKnex();
 
 describe("API AnUserShouldBeAbleToCreateATeam", () => {
   beforeAll(() => {

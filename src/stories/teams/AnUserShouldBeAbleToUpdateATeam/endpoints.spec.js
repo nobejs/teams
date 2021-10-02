@@ -1,6 +1,6 @@
 const contextClassRef = requireTestFunction("contextHelper");
 const randomUser = requireUtil("randomUser");
-const knex = require("../../../../database/knex");
+const knex = requireKnex();
 
 describe("API AnUserShouldBeAbleToUpdateATeam", () => {
   beforeAll(() => {
@@ -11,8 +11,8 @@ describe("API AnUserShouldBeAbleToUpdateATeam", () => {
   });
 
   beforeEach(async () => {
-    knex("teams").truncate();
-    knex("teams_members").truncate();
+    await knex("teams").truncate();
+    await knex("team_members").truncate();
   });
 
   it("User can update team", async () => {

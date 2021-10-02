@@ -14,8 +14,6 @@ async function createTestDatabase() {
   });
 
   try {
-    console.log("Checking GITHUB_ACTIONS Value:", process.env.GITHUB_ACTIONS);
-
     if (process.env.GITHUB_ACTIONS) {
       console.log("No need to create/drop db, as container would be destroyed");
     } else {
