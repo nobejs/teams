@@ -35,7 +35,31 @@ const create = async (payload) => {
   }
 };
 
+const first = async (where = {}) => {
+  try {
+    let teams = await knex("teams").where(where).first();
+    return teams;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const update = async (team_uuid, payload) => {
+  try {
+    payload["updated_at"] = new Date().toISOString();
+    let team = await knex("teams")
+      .where("uuid", "=", team_uuid)
+      .update(payload)
+      .returning("*");
+    return team[0];
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   create,
+  first,
+  update,
   countAll,
 };
