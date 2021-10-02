@@ -47,9 +47,6 @@ jobs:
         # node-version: [12.x, 14.x, 16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
-    env:
-      ENVFILE: .env.github
-
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
@@ -57,5 +54,16 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: yarn install
-    - run: yarn test:github
+    - name: Install dependencies
+      run: yarn install
+    - name: Run tests
+      run: yarn test:github
+      env:
+        DB_HOST: postgres
+        DB_USERNAME: postgres_user
+        DB_PASSWORD: postgres_password
+        DB_NAME: postgres_db
+        DB_PORT: 5432
+        DB_DIALECT: postgres
+        DEBUG: true
+        PORT: 3000
