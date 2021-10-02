@@ -46,9 +46,11 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+        cache: 'yarn'
+
     - name: Install dependencies
-      run: yarn install
+      run: yarn
+
     - name: Run tests
       run: yarn test:github
       env:
