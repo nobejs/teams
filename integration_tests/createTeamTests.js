@@ -36,5 +36,29 @@ module.exports = () => {
         creator_user_uuid: contextClassRef.user.user_uuid,
       });
     });
+
+    it("User cannot create with same slug", async () => {
+      const app = httpServer();
+
+      const payload = {
+        tenant: "api-test",
+        name: "Rajiv's Personal Team",
+        slug: "rajiv-personal-team",
+      };
+
+      const response = await app.inject({
+        method: "POST",
+        url: "/teams",
+        payload,
+        headers: contextClassRef.headers,
+      });
+
+      expect(response.statusCode).toBe(422);
+      expect(response.json()).toEqual(
+        expect.objectContaining({
+          errorCode: expect.stringMatching("InputNotValid"),
+        })
+      );
+    });
   });
 };
