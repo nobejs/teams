@@ -1,4 +1,4 @@
-require("../config");
+require("./config");
 const fs = require("fs-extra");
 const url = require("url");
 const path = require("path");
@@ -84,6 +84,16 @@ const updateRelease = (options) => {
                   ),
                   path.resolve(`core`)
                 );
+
+                fs.copySync(
+                  path.resolve(
+                    `upgrade-nobejs/release/${releaseFiles[0]}/update.js`
+                  ),
+                  path.resolve(`update.js`)
+                );
+
+                console.log("Self Update the update script");
+
                 fs.rmdirSync("upgrade-nobejs", { recursive: true });
                 fs.rmdirSync("core_bk", { recursive: true });
               } catch (err) {
