@@ -10,7 +10,7 @@ const prepare = ({ req }) => {
   return payload;
 };
 
-const authorize = ({ prepareResult }) => {
+const authorize = () => {
   return true;
 };
 
