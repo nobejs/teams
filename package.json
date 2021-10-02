@@ -9,7 +9,7 @@
     "nobe:genuser": "node ./core/utils/randomUser",
     "nobe:version": "node ./core/version",
     "test": "ENVFILE=.env.jest jest --runInBand",
-    "test:github": "ENVFILE=.env.github jest --runInBand",
+    "test:github": "jest --runInBand",
     "serve": "ENVFILE=.env DEBUG=true nodemon server.js",
     "nobe:update": "node ./update && yarn nobe:version",
     "db": "knex",
