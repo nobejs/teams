@@ -1,14 +1,14 @@
 module.exports = async (payload) => {
-  let result = {};
+  let result;
+  let respondResult;
   try {
     result = await testStrategy("teams/AnUserShouldBeAbleToUpdateATeam", {
       prepareResult: payload,
     });
+    respondResult = result.respondResult;
   } catch (error) {
-    console.log(error);
+    respondResult = error;
   }
-
-  const { respondResult } = result;
 
   return respondResult;
 };

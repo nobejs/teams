@@ -1,4 +1,11 @@
+const knex = require("../../../../database/knex");
+
 describe("test AnUserShouldBeAbleToUpdateATeam", () => {
+  beforeEach(async () => {
+    knex("teams").truncate();
+    knex("teams_members").truncate();
+  });
+
   it("an user can update a team", async () => {
     let respondResult;
     let createTeamResult;
@@ -52,5 +59,40 @@ describe("test AnUserShouldBeAbleToUpdateATeam", () => {
       name: "Rajiv's Company Team X",
       slug: "rajiv-company-team",
     });
+  });
+
+  it("an shouldn't be able to use slug of another team", async () => {
+    let respondResult;
+    let uniqueSlugTeamResult;
+    try {
+      uniqueSlugTeamResult = await requireTestFunction("createTeam")({
+        tenant: "handler-test",
+        name: "Rajiv's Unique Slug Team",
+        slug: "rajiv-unique-slug-team",
+        creator_user_uuid: "1098c53c-4a86-416b-b5e4-4677b70f5dfa",
+      });
+
+      uniqueSlugTeam2Result = await requireTestFunction("createTeam")({
+        tenant: "handler-test",
+        name: "Rajiv's Unique Slug Team 2",
+        slug: "rajiv-unique-slug-team-2",
+        creator_user_uuid: "1098c53c-4a86-416b-b5e4-4677b70f5dfa",
+      });
+
+      respondResult = await requireTestFunction("updateTeam")({
+        uuid: uniqueSlugTeamResult.uuid,
+        name: "Rajiv's Change Name drastically",
+        slug: "rajiv-unique-slug-team-2",
+        invoking_user_uuid: uniqueSlugTeamResult.creator_user_uuid,
+      });
+    } catch (error) {
+      respondResult = error;
+    }
+
+    expect(respondResult).toEqual(
+      expect.objectContaining({
+        errorCode: expect.stringMatching("InputNotValid"),
+      })
+    );
   });
 });
