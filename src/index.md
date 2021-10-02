@@ -1,6 +1,7 @@
 # Table
 
-- An User should be able to create a team
+- An User should be able to create a team [Done]
+- An User should be able to update a team
 - An User should be able to invite members to a team
 - An User should be able to remove a member from the team
 - An User should be able to get their teams
@@ -35,6 +36,28 @@
   - team uuid
 
 -------
+
+## An User should be able to update a team
+  
+  ### Prepare
+
+  - name
+  - slug
+
+  ### Authorize
+
+  - Only owner can update the name and slug
+
+  ### Handle
+
+  - Team name and Slug should be unique
+
+  ### Respond
+
+  - team uuid
+
+-------
+
 
 ## An User should be able to invite members to a team
 
