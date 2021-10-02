@@ -13,7 +13,6 @@ async function dropTestDatabase() {
     },
   });
   try {
-    await knex.destroy();
     await knex.raw(`DROP DATABASE IF EXISTS ${process.env.DB_NAME}`);
   } catch (error) {
     throw new Error(error);
@@ -24,8 +23,13 @@ async function dropTestDatabase() {
 
 module.exports = async () => {
   try {
-    await dropTestDatabase();
-    console.log("Test database dropped successfully");
+    console.log("Checking CI:", process.env.CI);
+    if (process.env.CI) {
+      console.log("No need to drop db, as container would be destroyed");
+    } else {
+      await dropTestDatabase();
+      console.log("Test database dropped successfully");
+    }
   } catch (error) {
     console.log(error);
     process.exit(1);
