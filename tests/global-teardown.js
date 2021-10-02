@@ -23,8 +23,8 @@ async function dropTestDatabase() {
 
 module.exports = async () => {
   try {
-    console.log("Checking CI:", process.env.CI);
-    if (process.env.CI) {
+    console.log("Checking GITHUB_ACTIONS:", process.env.GITHUB_ACTIONS);
+    if (process.env.GITHUB_ACTIONS) {
       console.log("No need to drop db, as container would be destroyed");
     } else {
       await dropTestDatabase();
