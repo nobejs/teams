@@ -15,7 +15,7 @@ module.exports = () => {
       const app = httpServer();
 
       const payload = {
-        tenant: "neptune",
+        tenant: "api-test",
         name: "Rajiv's Personal Team",
         slug: "rajiv-personal-team",
       };
@@ -32,7 +32,7 @@ module.exports = () => {
         uuid: expect.any(String),
         name: expect.any(String),
         slug: expect.any(String),
-        total_team_members: expect.any(Number),
+        total_team_members: 1,
         creator_user_uuid: contextClassRef.user.user_uuid,
       });
     });

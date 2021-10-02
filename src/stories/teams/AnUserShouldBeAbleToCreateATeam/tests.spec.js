@@ -4,7 +4,7 @@ describe("test AnUserShouldBeAbleToCreateATeam", () => {
     try {
       result = await testStrategy("teams/AnUserShouldBeAbleToCreateATeam", {
         prepareResult: {
-          tenant: "neptune",
+          tenant: "handler-test",
           name: "Rajiv's Personal Team",
           slug: "rajiv-personal-team",
           creator_user_uuid: "1098c53c-4a86-416b-b5e4-4677b70f5dfa",
@@ -45,7 +45,7 @@ describe("test AnUserShouldBeAbleToCreateATeam", () => {
     try {
       result = await testStrategy("teams/AnUserShouldBeAbleToCreateATeam", {
         prepareResult: {
-          tenant: "neptune",
+          tenant: "handler-test",
           name: "Rajiv's Personal Team",
           slug: "rajiv-personal-team",
           creator_user_uuid: "1098c53c-4a86-416b-b5e4-4677b70f5dfa",
