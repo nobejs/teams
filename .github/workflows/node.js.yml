@@ -20,17 +20,10 @@ jobs:
       postgres:
         # Docker Hub image
         image: postgres
-        # service environment variables
-        # `POSTGRES_HOST` is `postgres`
         env:
-          # optional (defaults to `postgres`)
-          POSTGRES_DB: postgres_db
-          # required
-          POSTGRES_PASSWORD: postgres_password
+          POSTGRES_PASSWORD: postgres
           # optional (defaults to `5432`)
           POSTGRES_PORT: 5432
-          # optional (defaults to `postgres`)
-          POSTGRES_USER: postgres_user
         ports:
           # maps tcp port 5432 on service container to the host
           - 5432:5432
@@ -60,9 +53,9 @@ jobs:
       run: yarn test:github
       env:
         DB_HOST: localhost
-        DB_USERNAME: postgres_user
-        DB_PASSWORD: postgres_password
-        DB_NAME: postgres_db
+        DB_USERNAME: postgres
+        DB_PASSWORD: postgres
+        DB_NAME: postgres
         DB_PORT: 5432
         DB_DIALECT: postgres
         DEBUG: true
