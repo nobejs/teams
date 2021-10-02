@@ -1,5 +1,3 @@
-process.env.ENVFILE = ".env.jest";
-
 module.exports = async () => {
   return {
     bail: true,
