@@ -13,6 +13,7 @@ async function dropTestDatabase() {
     },
   });
   try {
+    await knex.destroy();
     await knex.raw(`DROP DATABASE IF EXISTS ${process.env.DB_NAME}`);
   } catch (error) {
     throw new Error(error);
