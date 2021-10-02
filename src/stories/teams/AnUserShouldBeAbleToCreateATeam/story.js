@@ -1,10 +1,13 @@
 const validator = requireValidator();
 const TeamRepo = requireRepo("team");
+const findKeysFromRequest = requireUtil("findKeysFromRequest");
 const TeamMemberRepo = requireRepo("teamMember");
 const TeamSerializer = requireSerializer("team");
 
-const prepare = ({ reqQuery, reqBody, reqParams }) => {
-  return {};
+const prepare = ({ req }) => {
+  const payload = findKeysFromRequest(req, ["tenant", "name", "slug"]);
+  payload["creator_user_uuid"] = req.user;
+  return payload;
 };
 
 const authorize = ({ prepareResult }) => {
