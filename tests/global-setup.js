@@ -17,12 +17,12 @@ async function createTestDatabase() {
     console.log("Checking CI:", process.env.CI);
 
     if (process.env.CI) {
-      console.log("No need to drop db, as container would be destroyed");
+      console.log("No need to create/drop db, as container would be destroyed");
     } else {
+      await knex.raw(`CREATE DATABASE ${process.env.DB_NAME}`);
       await knex.raw(`DROP DATABASE IF EXISTS ${process.env.DB_NAME}`);
       console.log("Test database dropped successfully");
     }
-    await knex.raw(`CREATE DATABASE ${process.env.DB_NAME}`);
   } catch (error) {
     throw new Error(error);
   } finally {
