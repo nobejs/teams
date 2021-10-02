@@ -1,24 +1,79 @@
-const prepare = ({ reqQuery, reqBody, reqParams }) => {
-  return {};
+const validator = requireValidator();
+const TeamRepo = requireRepo("team");
+const findKeysFromRequest = requireUtil("findKeysFromRequest");
+const TeamSerializer = requireSerializer("team");
+
+const prepare = async ({ req }) => {
+  const payload = findKeysFromRequest(req, ["name", "slug", "uuid"]);
+
+  // let team = await TeamRepo.first({
+  //   uuid: payload.uuid,
+  // });
+
+  payload["invoking_user_uuid"] = req.user;
+  return payload;
 };
 
-const authorize = ({ prepareResult }) => {
-  if (0) {
-    throw {
-      statusCode: 401,
-      message: "Unauthorized",
-    };
+const authorize = async ({ prepareResult }) => {
+  if (team.creator_user_uuid === prepareResult.invoking_user_uuid) {
+    return true;
   }
 
-  return true;
+  return false;
 };
 
-const handle = ({ prepareResult, storyName }) => {
-  return {};
+const validateInput = async (prepareResult) => {
+  const constraints = {
+    creator_user_uuid: {
+      presence: {
+        allowEmpty: false,
+        message: "^Please enter creator_user_uuid",
+      },
+    },
+    tenant: {
+      presence: {
+        allowEmpty: false,
+        message: "^Please enter tenant",
+      },
+    },
+    name: {
+      presence: {
+        allowEmpty: false,
+        message: "^Please enter name",
+      },
+    },
+    slug: {
+      presence: {
+        allowEmpty: false,
+        message: "^Please enter slug",
+      },
+      type: "string",
+      custom_callback: {
+        message: "Slug should be unique",
+        callback: async (payload) => {
+          let count =
+            typeof payload.slug === "string"
+              ? await TeamRepo.countAll({
+                  slug: prepareResult.slug,
+                  tenant: prepareResult.tenant,
+                })
+              : -1;
+          return count === 0 ? true : false;
+        },
+      },
+    },
+  };
+
+  return validator(prepareResult, constraints);
 };
 
-const respond = ({ handleResult }) => {
-  return {};
+const handle = async ({ prepareResult }) => {
+  await validateInput(prepareResult);
+  return await TeamRepo.create(prepareResult);
+};
+
+const respond = async ({ handleResult }) => {
+  return await TeamSerializer.single(handleResult);
 };
 
 module.exports = {

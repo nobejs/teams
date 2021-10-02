@@ -23,6 +23,8 @@ global.requireValidator = () => require(`./core/validator`);
 global.requireHttpServer = () => require(`./core/httpServer`);
 global.requireGlobal = () => require(`./global.js`);
 
+global.requireTestFunction = (name) => require(`./src/functions/tests/${name}`);
+
 module.exports = () => {
   return {
     load: (file) => {
