@@ -1,8 +1,8 @@
 const single = require("./single");
 
-module.exports = async (teams) => {
+module.exports = async (members) => {
   let result = await Promise.all(
-    teams.map((c) => {
+    members.map((c) => {
       return single(c);
     })
   );

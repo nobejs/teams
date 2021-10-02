@@ -1,7 +1,7 @@
 # Table
 
 - An User should be able to create a team [Done]
-- An User should be able to update a team
+- An User should be able to update a team [Done]
 - An User should be able to invite members to a team
 - An User should be able to remove a member from the team
 - An User should be able to get their teams

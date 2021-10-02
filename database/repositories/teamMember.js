@@ -13,6 +13,24 @@ const countAll = async (where = {}, whereNot = {}) => {
   }
 };
 
+const findAll = async (where = {}) => {
+  try {
+    let teams = await knex("team_members").where(where).select("*");
+    return teams;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const first = async (where = {}) => {
+  try {
+    let team_members = await knex("team_members").where(where).first();
+    return team_members;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const create = async (payload) => {
   try {
     payload["created_at"] = new Date().toISOString();
@@ -28,5 +46,7 @@ const create = async (payload) => {
 
 module.exports = {
   create,
+  first,
   countAll,
+  findAll,
 };
