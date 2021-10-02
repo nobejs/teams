@@ -1,6 +1,6 @@
 const httpServer = requireHttpServer();
 const randomUser = requireUtil("randomUser");
-const contextClassRef = require("./ContextHelper");
+const contextClassRef = require("./contextHelper");
 
 module.exports = () => {
   beforeAll(() => {
