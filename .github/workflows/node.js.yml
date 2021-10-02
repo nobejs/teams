@@ -10,7 +10,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
 
@@ -19,7 +19,7 @@ jobs:
       # label used to access the service container
       postgres:
         # Docker Hub image
-        image: postgres:latest
+        image: postgres
         # service environment variables
         # `POSTGRES_HOST` is `postgres`
         env:
@@ -59,7 +59,7 @@ jobs:
     - name: Run tests
       run: yarn test:github
       env:
-        DB_HOST: postgres
+        DB_HOST: localhost
         DB_USERNAME: postgres_user
         DB_PASSWORD: postgres_password
         DB_NAME: postgres_db
