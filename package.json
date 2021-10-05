@@ -18,6 +18,7 @@
     "db:migration": "knex migrate:make"
   },
   "devDependencies": {
+    "jest-cli": "^27.2.4",
     "nodemon": "^2.0.13"
   },
   "dependencies": {

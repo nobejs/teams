@@ -1,12 +1,15 @@
 # Table
 
+Epic = [Story1, Story2]
+
 - An User should be able to create a team [Done]
 - An User should be able to update a team [Done]
 - An User should be able to invite members to a team
 - An User should be able to remove a member from the team
 - An User should be able to get their teams
-- An User should be able to get their team members
+- An User should be able to get their team members [Done]
 - An User should be able to leave a team
+
 - An User should be able to subscribe a team to a Stripe Plan
 - An User should be able to unsubscribe a team from a Stripe Plan
 - An User should be able to cancel a team from a Stripe Plan
@@ -28,8 +31,8 @@
 
   ### Handle
 
-  - Team name and Slug should be unique
-  - Add to team member as owner
+  - Slug should be unique
+  - Add user to team members as a owner
 
   ### Respond
 
