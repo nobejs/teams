@@ -32,6 +32,7 @@
     "njwt": "^1.1.0",
     "path-to-regexp": "^6.2.0",
     "pg": "^8.7.1",
+    "stripe": "^8.178.0",
     "supertest": "^6.1.6",
     "uuid": "^8.3.2",
     "validate.js": "^0.13.1"

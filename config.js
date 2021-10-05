@@ -44,7 +44,12 @@ module.exports = () => {
     loadEndpoints: "./core/loadEndpoints",
     validator: "./core/validator",
     endpoints: "./src/endpoints",
-    excludeFromAuth: ["GET /"],
+    excludeFromAuth: [
+      "GET /",
+      "GET /go-to-stripe",
+      "GET /stripe-session-success",
+      "GET /teams/:uuid/stripe/subscribe",
+    ],
     responseKey: "respondResult",
   };
 };
