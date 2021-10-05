@@ -212,3 +212,21 @@ DB Tables:
 - created_at
 - updated_at
 - deleted_at
+
+### subscriptions
+
+- uuid
+- team_uuid
+- gateway (stripe)
+- status
+- ends_on
+- subscription_id
+- created_at
+- updated_at
+- deleted_at
+
+https://github.com/laravel/cashier-stripe/blob/13.x/src/Http/Controllers/WebhookController.php
+
+- https://stripe.com/docs/api/events/types#event_types-customer.subscription.created
+- https://stripe.com/docs/api/events/types#event_types-customer.subscription.updated
+- https://stripe.com/docs/api/events/types#event_types-customer.subscription.updated
