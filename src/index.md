@@ -17,171 +17,178 @@ Epic = [Story1, Story2]
 - An User should be able to change the team name and profile picture
 
 ## An User should be able to create a team
-  
-  ### Prepare
 
-  - tenant
-  - name
-  - slug
-  - creator_user_uuid
+### Prepare
 
-  ### Authorize
+- tenant
+- name
+- slug
+- creator_user_uuid
 
-  - Any user can create a Team
+### Authorize
 
-  ### Handle
+- Any user can create a Team
 
-  - Slug should be unique
-  - Add user to team members as a owner
+### Handle
 
-  ### Respond
+- Slug should be unique
+- Add user to team members as a owner
 
-  - team uuid
+### Respond
 
--------
+- team uuid
+
+---
 
 ## An User should be able to update a team
-  
-  ### Prepare
 
-  - name
-  - slug
+### Prepare
 
-  ### Authorize
+- name
+- slug
 
-  - Only owner can update the name and slug
+### Authorize
 
-  ### Handle
+- Only owner can update the name and slug
 
-  - Team name and Slug should be unique
+### Handle
 
-  ### Respond
+- Team name and Slug should be unique
 
-  - team uuid
+### Respond
 
--------
+- team uuid
 
+---
 
 ## An User should be able to invite members to a team
 
 Right now we support only Invite user by email
 
-  ### Prepare
+### Prepare
 
-  - team_uuid
-  - email
+- team_uuid
+- email
 
-  ### Authorize
+### Authorize
 
-  - Only team owner can invite
+- Only team owner can invite
 
-  ### Handle
+### Handle
 
-  - email already shouldn't have been invited
-  - Add member
+- email already shouldn't have been invited
+- Add member
 
-  ### Respond
+### Respond
 
-  - success
+- success
 
--------
+---
 
 ## An User should be able to remove a member from the team
 
-  ### Prepare
+### Prepare
 
-  - member_uuid
+- member_uuid
 
-  ### Authorize
+### Authorize
 
-  - Only team owner can remove
+- Only team owner can remove
 
-  ### Handle
+### Handle
 
-  - Remove member 
+- Remove member
 
-  ### Respond
+### Respond
 
-  - success
+- success
 
--------
+---
 
 ## An User should be able to get their teams
 
-  ### Prepare
+### Prepare
 
-  - tenant
-  - user_uuid
-  - status: part_of, invited_to
+- tenant
+- user_uuid
+- status: part_of, invited_to
 
-  ### Authorize
+### Authorize
 
-  - Any user
+- Any user
 
-  ### Handle
+### Handle
 
-  - Find teams where user_uuid is part_of || invited_to
+- Find teams where user_uuid is part_of || invited_to
 
-  ### Respond
+### Respond
 
-  - collection of teams
+- collection of teams
 
-----------
-
+---
 
 ## An User should be able to get their team members
 
+### Prepare
 
-  ### Prepare
+- team_uuid
 
-  - team_uuid
+### Authorize
 
-  ### Authorize
+- Team member
 
-  - Team member
+### Handle
 
-  ### Handle
+- Find members of the team along with invited to
 
-  - Find members of the team along with invited to
+### Respond
 
-  ### Respond
+- collection of members
 
-  - collection of members
-
-----------
+---
 
 ## An User should be able to leave a team
 
-  ### Prepare
+### Prepare
 
-  - team_uuid
+- team_uuid
 
-  ### Authorize
+### Authorize
 
-  - Team member
+- Team member
 
-  ### Handle
+### Handle
 
-  - Remove current user from selected Team
+- Remove current user from selected Team
 
-  ### Respond
+### Respond
 
-  - success
+- success
 
-----------
+---
 
-## An User should be able to subscribe a team to a Stripe Plan
+## A Team Can Subscribe to Stripe Plan
+
+We will be using Stripe Checkout flow for this feature, essentially it required two important steps:
+
+1. Create a Checkout Session
+   - Which returns an URL in response
+   - User should be redirected to that url
+2. Then after the redirection to your portal, get the checkout session and update the subscription accordingly
+
+---
+
 ## An User should be able to unsubscribe a team from a Stripe Plan
+
 ## An User should be able to cancel a team from a Stripe Plan
+
 ## An User should be able to change a team to a different Stripe Plan
+
 ## An User should be able to change the team name and profile picture
 
-
-
------------
+---
 
 DB Tables:
-
 
 ### teams
 
@@ -205,4 +212,3 @@ DB Tables:
 - created_at
 - updated_at
 - deleted_at
-
