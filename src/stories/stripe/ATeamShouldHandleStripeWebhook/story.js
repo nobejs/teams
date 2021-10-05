@@ -1,5 +1,5 @@
 const prepare = ({ reqQuery, reqBody, reqParams, req }) => {
-  console.log("webhook", reqBody);
+  console.log("webhook", req.headers);
   return {};
 };
 
