@@ -3,11 +3,13 @@ const randomUser = requireUtil("randomUser");
 const knex = requireKnex();
 
 describe("API AnUserShouldBeAbleToCreateATeam", () => {
-  beforeAll(() => {
+  beforeAll(async () => {
     contextClassRef.user = randomUser();
     contextClassRef.headers = {
       Authorization: `Bearer ${contextClassRef.user.token}`,
     };
+    await knex("teams").truncate();
+    await knex("team_members").truncate();
   });
 
   it("User can create team", async () => {
