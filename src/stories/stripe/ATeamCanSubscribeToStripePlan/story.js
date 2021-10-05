@@ -1,3 +1,8 @@
+const validator = requireValidator();
+const findKeysFromRequest = requireUtil("findKeysFromRequest");
+const TeamMemberRepo = requireRepo("teamMember");
+const createCheckoutSession = require("../../../functions/stripe/createCheckoutSession");
+
 const prepare = async ({ req }) => {
   const payload = findKeysFromRequest(req, [
     "uuid",
@@ -33,7 +38,7 @@ const authorize = ({ augmentPrepareResult }) => {
 
 const validateInput = async (prepareResult) => {
   const constraints = {
-    price: {
+    price_id: {
       presence: {
         allowEmpty: false,
         message: "^Please choose a plan",
@@ -50,7 +55,7 @@ const validateInput = async (prepareResult) => {
   return validator(prepareResult, constraints);
 };
 
-const handle = ({ prepareResult, storyName }) => {
+const handle = async ({ prepareResult, storyName }) => {
   await validateInput(prepareResult);
   try {
     let result = await createCheckoutSession(
@@ -70,8 +75,8 @@ const handle = ({ prepareResult, storyName }) => {
   }
 };
 
-const respond = ({ handleResult }) => {
-  return res.redirect(handleResult.url);
+const respond = ({ handleResult, res }) => {
+  return { redirect_to: handleResult.url, handleResult };
 };
 
 module.exports = {

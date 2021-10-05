@@ -10,7 +10,7 @@
     "nobe:version": "node ./core/version",
     "test": "ENVFILE=.env.jest jest --runInBand",
     "test:github": "jest --runInBand",
-    "serve": "ENVFILE=.env DEBUG=true nodemon server.js",
+    "serve": "ENVFILE='.env' DEBUG=true nodemon server.js",
     "nobe:update": "node ./update && yarn nobe:version",
     "db": "knex",
     "db:migrate": "knex migrate:latest",
