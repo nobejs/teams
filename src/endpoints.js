@@ -12,6 +12,7 @@ module.exports = (app) => {
       endpoints: [
         ["post", "/teams", "teams/AnUserShouldBeAbleToCreateATeam"],
         ["put", "/teams/:uuid", "teams/AnUserShouldBeAbleToUpdateATeam"],
+        ["get", "/teams/:uuid", "teams/AnUserCanGetTeamMembers"],
       ],
     },
   ];
