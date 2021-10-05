@@ -10,32 +10,15 @@ module.exports = (app) => {
     return res.code(200).send({ status: "I am ready" });
   });
 
-  app.get("/go-to-stripe", async (req, res) => {
-    let result = {};
-    try {
-      result = await createCheckoutSession("rajiv+2@betalectic.com", [
-        {
-          price: "price_1JZvOrI0sgPwdxJLCgNoqHjy",
-          quantity: 1,
-        },
-      ]);
-    } catch (error) {
-      console.log(error);
-    }
-    console.log("result", result);
+  // app.get("/stripe-session-success", async (req, res) => {
+  //   let result = null;
+  //   try {
+  //     result = await retrieveCheckoutSession(req.query.session_id);
+  //   } catch (error) {}
 
-    return res.redirect(result.url);
-  });
-
-  app.get("/stripe-session-success", async (req, res) => {
-    let result = null;
-    try {
-      result = await retrieveCheckoutSession(req.query.session_id);
-    } catch (error) {}
-
-    console.log("get stripe-session-success", req.query.session_id, result);
-    return res.code(200).send({ status: "I am ready" });
-  });
+  //   console.log("get stripe-session-success", req.query.session_id, result);
+  //   return res.code(200).send({ status: "I am ready" });
+  // });
 
   return [
     {
@@ -52,6 +35,11 @@ module.exports = (app) => {
           "get",
           "/teams/:uuid/stripe/subscribe",
           "stripe/ATeamCanSubscribeToStripePlan",
+        ],
+        [
+          "post",
+          "/teams/stripe/webhook",
+          "stripe/ATeamShouldHandleStripeWebhook",
         ],
       ],
     },

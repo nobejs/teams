@@ -46,9 +46,8 @@ module.exports = () => {
     endpoints: "./src/endpoints",
     excludeFromAuth: [
       "GET /",
-      "GET /go-to-stripe",
-      "GET /stripe-session-success",
       "GET /teams/:uuid/stripe/subscribe",
+      "POST /teams/stripe/webhook",
     ],
     responseKey: "respondResult",
   };

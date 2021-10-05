@@ -229,4 +229,5 @@ https://github.com/laravel/cashier-stripe/blob/13.x/src/Http/Controllers/Webhook
 
 - https://stripe.com/docs/api/events/types#event_types-customer.subscription.created
 - https://stripe.com/docs/api/events/types#event_types-customer.subscription.updated
-- https://stripe.com/docs/api/events/types#event_types-customer.subscription.updated
+- https://stripe.com/docs/api/events/types#event_types-customer.subscription.deleted
+- https://stripe.com/docs/api/events/types#event_types-invoice.payment_action_required
