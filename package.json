@@ -10,7 +10,7 @@
     "nobe:version": "node ./core/version",
     "test": "ENVFILE=.env.jest jest --runInBand",
     "test:github": "jest --runInBand",
-    "serve": "ENVFILE=.env DEBUG=true nodemon server.js",
+    "serve": "ENVFILE='.env' DEBUG=true nodemon server.js",
     "nobe:update": "node ./update && yarn nobe:version",
     "db": "knex",
     "db:migrate": "knex migrate:latest",
@@ -32,6 +32,7 @@
     "njwt": "^1.1.0",
     "path-to-regexp": "^6.2.0",
     "pg": "^8.7.1",
+    "stripe": "^8.178.0",
     "supertest": "^6.1.6",
     "uuid": "^8.3.2",
     "validate.js": "^0.13.1"

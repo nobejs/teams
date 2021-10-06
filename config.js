@@ -44,7 +44,11 @@ module.exports = () => {
     loadEndpoints: "./core/loadEndpoints",
     validator: "./core/validator",
     endpoints: "./src/endpoints",
-    excludeFromAuth: ["GET /"],
+    excludeFromAuth: [
+      "GET /",
+      "GET /teams/:uuid/stripe/subscribe",
+      "POST /teams/stripe/webhook",
+    ],
     responseKey: "respondResult",
   };
 };

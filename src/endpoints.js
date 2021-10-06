@@ -10,9 +10,29 @@ module.exports = (app) => {
   return [
     {
       endpoints: [
-        ["post", "/teams", "teams/AnUserShouldBeAbleToCreateATeam"],
-        ["put", "/teams/:uuid", "teams/AnUserShouldBeAbleToUpdateATeam"],
-        ["get", "/teams/:uuid", "teams/AnUserCanGetTeamMembers"],
+        ["get", "/teams", "teams/UserCanViewTeams"],
+        ["post", "/teams", "teams/UserCanCreateTeam"],
+        ["put", "/teams/:team_uuid", "teams/UserCanUpdateTeam"],
+        ["get", "/teams/:team_uuid", "teams/UserCanViewTeam"],
+        ["delete", "/teams/:team_uuid", "teams/UserCanDeleteTeam"],
+        ["post", "/teams/:team_uuid/members", "teams/UserCanCreateTeamMember"],
+        [
+          "put",
+          "/teams/:team_uuid/members/:team_member_uuid",
+          "teams/UserCanUpdateTeamMember",
+        ],
+        [
+          "delete",
+          "/teams/:team_uuid/members/:team_member_uuid",
+          "teams/UserCanDeleteTeamMember",
+        ],
+        ["get", "/teams/:team_uuid/members", "teams/UserCanViewTeamMembers"],
+        [
+          "post",
+          "/teams/:team_uuid/stripe/subscribe",
+          "stripe/TeamCanSubscribeToStripePlan",
+        ],
+        ["post", "/stripe/webhook", "stripe/CanHandleStripeWebhook"],
       ],
     },
   ];

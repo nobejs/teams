@@ -8,7 +8,7 @@ module.exports = async (team_uuid) => {
 
     respondResult = await app.inject({
       method: "GET",
-      url: `/teams/${team_uuid}`,
+      url: `/teams/${team_uuid}/members`,
       headers: contextClassRef.headers,
     });
   } catch (error) {

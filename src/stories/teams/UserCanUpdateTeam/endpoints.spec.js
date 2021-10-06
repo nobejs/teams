@@ -2,7 +2,7 @@ const contextClassRef = requireTestFunction("contextHelper");
 const randomUser = requireUtil("randomUser");
 const knex = requireKnex();
 
-describe("API AnUserShouldBeAbleToUpdateATeam", () => {
+describe("API UserCanUpdateTeam", () => {
   beforeAll(() => {
     contextClassRef.user = randomUser();
     contextClassRef.headers = {

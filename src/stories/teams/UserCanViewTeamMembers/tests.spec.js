@@ -26,7 +26,7 @@ describe("Handler AnUserShouldBeAbleToGetTheirTeamMembers", () => {
       });
 
       result = await requireTestFunction("getTeamMembersViaHandler")({
-        uuid: team1.uuid,
+        team_uuid: team1.uuid,
         invoking_user_uuid: "54c2779a-7200-4d98-be14-d4aec12b2fa9",
       });
     } catch (error) {
@@ -56,7 +56,7 @@ describe("Handler AnUserShouldBeAbleToGetTheirTeamMembers", () => {
       });
 
       result = await requireTestFunction("getTeamMembersViaHandler")({
-        uuid: team1.uuid,
+        team_uuid: team1.uuid,
         invoking_user_uuid: "1098c53c-4a86-416b-b5e4-4677b70f5dfa",
       });
     } catch (error) {

@@ -1,10 +1,9 @@
 module.exports = async (payload) => {
   let respondResult;
   try {
-    result = await testStrategy("teams/AnUserCanGetTeamMembers", {
+    result = await testStrategy("teams/UserCanViewTeamMembers", {
       prepareResult: payload,
     });
-    // console.log("result", result);
     respondResult = result.respondResult;
   } catch (error) {
     respondResult = error;
