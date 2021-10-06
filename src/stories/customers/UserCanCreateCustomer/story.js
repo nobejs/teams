@@ -2,11 +2,11 @@ const validator = requireValidator();
 const CustomerRepo = requireRepo("customer");
 const findKeysFromRequest = requireUtil("findKeysFromRequest");
 const pickKeysFromObject = requireUtil("pickKeysFromObject");
-const TeamSerializer = requireSerializer("team");
 const stripeCreateCustomer = requireFunction("stripe/createCustomer");
 
 const prepare = ({ req }) => {
-  const payload = findKeysFromRequest(req, ["tenant", "user_uuid", "meta"]);
+  const payload = findKeysFromRequest(req, ["tenant", "meta"]);
+  payload["user_uuid"] = req.user;
   return payload;
 };
 
@@ -63,6 +63,7 @@ const handle = async ({ prepareResult, storyName }) => {
       "meta",
     ]);
     payload["stripe_id"] = stripeCustomer["id"];
+    payload["meta"]["metadata"] = { user_uuid: prepareResult.user_uuid };
     let customer = await CustomerRepo.create(payload);
     return customer;
   } catch (error) {

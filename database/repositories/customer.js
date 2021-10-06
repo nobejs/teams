@@ -28,6 +28,18 @@ const create = async (payload) => {
   }
 };
 
+const findAll = async (where = {}, whereNot = {}) => {
+  try {
+    let customers = await knex("customers")
+      .where(where)
+      .whereNot(whereNot)
+      .returning("*");
+    return customers;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const first = async (where = {}) => {
   try {
     let teams = await knex("teams").where(where).first();
@@ -55,4 +67,5 @@ module.exports = {
   first,
   update,
   countAll,
+  findAll,
 };
