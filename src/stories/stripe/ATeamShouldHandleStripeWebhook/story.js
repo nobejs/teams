@@ -1,5 +1,7 @@
+const debugLogger = requireUtil("debugLogger");
+
 const prepare = ({ reqQuery, reqBody, reqParams, req }) => {
-  console.log("webhook", req.headers);
+  debugLogger("webhook", req.headers);
   return {};
 };
 

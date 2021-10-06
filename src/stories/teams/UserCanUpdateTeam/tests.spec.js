@@ -1,4 +1,5 @@
 const knex = requireKnex();
+const debugLogger = requireUtil("debugLogger");
 
 describe("Handler UserCanUpdateTeam", () => {
   beforeEach(async () => {
@@ -23,7 +24,7 @@ describe("Handler UserCanUpdateTeam", () => {
         invoking_user_uuid: createTeamResult.creator_user_uuid,
       });
     } catch (error) {
-      console.log("Error", error);
+      debugLogger("Error", error);
     }
 
     expect(respondResult).toMatchObject({
@@ -51,7 +52,7 @@ describe("Handler UserCanUpdateTeam", () => {
         invoking_user_uuid: createTeamResult.creator_user_uuid,
       });
     } catch (error) {
-      console.log("Error", error);
+      debugLogger("Error", error);
     }
 
     expect(respondResult).toMatchObject({

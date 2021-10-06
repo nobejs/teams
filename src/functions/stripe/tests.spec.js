@@ -1,4 +1,5 @@
 const createCheckoutSession = require("./createCheckoutSession");
+const debugLogger = requireUtil("debugLogger");
 
 describe("test createCheckoutSession", () => {
   it("an user can", async () => {
@@ -11,9 +12,9 @@ describe("test createCheckoutSession", () => {
         },
       ]);
     } catch (error) {
-      console.log(error);
+      debugLogger(error);
     }
-    console.log("result", result);
+    debugLogger("result", result);
     expect(1).toBe(1);
   });
 });
