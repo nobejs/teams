@@ -16,7 +16,6 @@ describe("test stripe functions", () => {
     } catch (error) {
       debugLogger(error);
     }
-    debugLogger("result", result);
     expect(1).toBe(1);
   });
 

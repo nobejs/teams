@@ -1,7 +1,9 @@
 const validator = requireValidator();
 const CustomerRepo = requireRepo("customer");
 const findKeysFromRequest = requireUtil("findKeysFromRequest");
+const pickKeysFromObject = requireUtil("pickKeysFromObject");
 const TeamSerializer = requireSerializer("team");
+const stripeCreateCustomer = requireFunction("stripe/createCustomer");
 
 const prepare = ({ req }) => {
   const payload = findKeysFromRequest(req, ["tenant", "name", "slug"]);
@@ -15,6 +17,12 @@ const authorize = ({}) => {
 
 const validateInput = async (prepareResult) => {
   const constraints = {
+    meta: {
+      presence: {
+        allowEmpty: false,
+        message: "^Please enter tenant",
+      },
+    },
     tenant: {
       presence: {
         allowEmpty: false,
@@ -31,7 +39,7 @@ const validateInput = async (prepareResult) => {
         message: "user_uuid should be unique inside a tenant",
         callback: async (payload) => {
           let count =
-            typeof payload.slug === "string"
+            typeof payload.user_uuid === "string"
               ? await CustomerRepo.countAll({
                   user_uuid: prepareResult.user_uuid,
                   tenant: prepareResult.tenant,
@@ -46,14 +54,25 @@ const validateInput = async (prepareResult) => {
   return validator(prepareResult, constraints);
 };
 
-const handle = ({ prepareResult, storyName }) => {
-  await validateInput(prepareResult);
-  await;
-  return {};
+const handle = async ({ prepareResult, storyName }) => {
+  try {
+    await validateInput(prepareResult);
+    const stripeCustomer = await stripeCreateCustomer(prepareResult.meta);
+    let payload = pickKeysFromObject(prepareResult, [
+      "tenant",
+      "user_uuid",
+      "meta",
+    ]);
+    payload["stripe_id"] = stripeCustomer["id"];
+    let customer = await CustomerRepo.create(payload);
+    return customer;
+  } catch (error) {
+    throw error;
+  }
 };
 
 const respond = ({ handleResult }) => {
-  return {};
+  return handleResult;
 };
 
 module.exports = {
