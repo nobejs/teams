@@ -6,7 +6,8 @@ module.exports = async (
     tenant: "api-test",
     name: "Rajiv's Personal Team",
     slug: "rajiv-personal-team",
-  }
+  },
+  headers = contextClassRef.headers
 ) => {
   let respondResult;
   try {
@@ -16,7 +17,7 @@ module.exports = async (
       method: "POST",
       url: "/teams",
       payload,
-      headers: contextClassRef.headers,
+      headers,
     });
   } catch (error) {
     respondResult = error;

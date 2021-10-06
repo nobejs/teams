@@ -3,17 +3,23 @@ const randomUser = requireUtil("randomUser");
 const knex = requireKnex();
 const debugLogger = requireUtil("debugLogger");
 
-describe("API UserCanViewTeamMembers", () => {
+describe("Handler UserCanViewTeamMembers", () => {
   beforeAll(async () => {
     contextClassRef.user = randomUser();
     contextClassRef.headers = {
       Authorization: `Bearer ${contextClassRef.user.token}`,
     };
+
+    contextClassRef.user2 = randomUser();
+    contextClassRef.headers2 = {
+      Authorization: `Bearer ${contextClassRef.user2.token}`,
+    };
+
     await knex("teams").truncate();
     await knex("team_members").truncate();
   });
 
-  it("User can get team members", async () => {
+  it("member_should_be_able_to_access_team_members", async () => {
     let response;
 
     try {
@@ -27,6 +33,7 @@ describe("API UserCanViewTeamMembers", () => {
     }
 
     expect(response.statusCode).toBe(200);
+
     expect(response.json()).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
@@ -36,5 +43,29 @@ describe("API UserCanViewTeamMembers", () => {
         }),
       ])
     );
+  });
+
+  it("non_member_shouldnt_be_able_to_access_team_members", async () => {
+    let team1;
+
+    try {
+      team1 = await requireTestFunction("createTeamViaAPI")(
+        {
+          tenant: "api-test",
+          name: "Rajiv's Personal Team",
+          slug: "rajiv-personal-team-2",
+        },
+        contextClassRef.headers2
+      );
+
+      response = await requireTestFunction("getTeamMembersViaAPI")(
+        team1.json()["uuid"]
+      );
+    } catch (error) {
+      response = error;
+      debugLogger(response.json());
+    }
+
+    expect(response.statusCode).toBe(403);
   });
 });
