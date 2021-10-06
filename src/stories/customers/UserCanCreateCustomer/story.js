@@ -6,8 +6,7 @@ const TeamSerializer = requireSerializer("team");
 const stripeCreateCustomer = requireFunction("stripe/createCustomer");
 
 const prepare = ({ req }) => {
-  const payload = findKeysFromRequest(req, ["tenant", "name", "slug"]);
-  payload["creator_user_uuid"] = req.user;
+  const payload = findKeysFromRequest(req, ["tenant", "user_uuid", "meta"]);
   return payload;
 };
 
@@ -20,7 +19,7 @@ const validateInput = async (prepareResult) => {
     meta: {
       presence: {
         allowEmpty: false,
-        message: "^Please enter tenant",
+        message: "^Please enter meta",
       },
     },
     tenant: {
