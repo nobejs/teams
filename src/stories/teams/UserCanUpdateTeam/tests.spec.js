@@ -1,6 +1,6 @@
 const knex = requireKnex();
 
-describe("Handler AnUserShouldBeAbleToUpdateATeam", () => {
+describe("Handler UserCanUpdateTeam", () => {
   beforeEach(async () => {
     await knex("teams").truncate();
     await knex("team_members").truncate();
@@ -17,7 +17,7 @@ describe("Handler AnUserShouldBeAbleToUpdateATeam", () => {
         creator_user_uuid: "1098c53c-4a86-416b-b5e4-4677b70f5dfa",
       });
       respondResult = await requireTestFunction("updateTeamViaHandler")({
-        uuid: createTeamResult.uuid,
+        team_uuid: createTeamResult.uuid,
         name: "Rajiv's Personal Team 2",
         slug: "rajiv-personal-team-2",
         invoking_user_uuid: createTeamResult.creator_user_uuid,
@@ -45,7 +45,7 @@ describe("Handler AnUserShouldBeAbleToUpdateATeam", () => {
       });
 
       respondResult = await requireTestFunction("updateTeamViaHandler")({
-        uuid: createTeamResult.uuid,
+        team_uuid: createTeamResult.uuid,
         name: "Rajiv's Company Team X",
         slug: "rajiv-company-team",
         invoking_user_uuid: createTeamResult.creator_user_uuid,
@@ -82,7 +82,7 @@ describe("Handler AnUserShouldBeAbleToUpdateATeam", () => {
       );
 
       respondResult = await requireTestFunction("updateTeamViaHandler")({
-        uuid: uniqueSlugTeamResult.uuid,
+        team_uuid: uniqueSlugTeamResult.uuid,
         name: "Rajiv's Change Name drastically",
         slug: "rajiv-unique-slug-team-2",
         invoking_user_uuid: uniqueSlugTeamResult.creator_user_uuid,

@@ -8,7 +8,7 @@ module.exports = async (
 ) => {
   let respondResult;
   try {
-    result = await testStrategy("teams/AnUserShouldBeAbleToCreateATeam", {
+    result = await testStrategy("teams/UserCanCreateTeam", {
       prepareResult: payload,
     });
     respondResult = result.respondResult;

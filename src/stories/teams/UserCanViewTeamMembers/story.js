@@ -3,21 +3,21 @@ const findKeysFromRequest = requireUtil("findKeysFromRequest");
 const TeamMemberSerializer = requireSerializer("team_member");
 
 const prepare = async ({ req }) => {
-  const payload = findKeysFromRequest(req, ["uuid"]);
+  const payload = findKeysFromRequest(req, ["team_uuid"]);
   payload["invoking_user_uuid"] = req.user;
   return payload;
 };
 
 const augmentPrepare = async ({ prepareResult }) => {
   let teamMember = await TeamMemberRepo.first({
-    team_uuid: prepareResult.uuid,
+    team_uuid: prepareResult.team_uuid,
     user_uuid: prepareResult.invoking_user_uuid,
   });
 
   return { teamMember };
 };
 
-const authorize = ({ prepareResult, augmentPrepareResult }) => {
+const authorize = ({ augmentPrepareResult }) => {
   if (augmentPrepareResult.teamMember) {
     return true;
   }
@@ -30,7 +30,7 @@ const authorize = ({ prepareResult, augmentPrepareResult }) => {
 
 const handle = async ({ prepareResult }) => {
   return await TeamMemberRepo.findAll({
-    team_uuid: prepareResult.uuid,
+    team_uuid: prepareResult.team_uuid,
   });
 };
 

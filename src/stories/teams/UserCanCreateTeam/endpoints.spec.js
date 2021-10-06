@@ -2,7 +2,7 @@ const contextClassRef = requireTestFunction("contextHelper");
 const randomUser = requireUtil("randomUser");
 const knex = requireKnex();
 
-describe("API AnUserShouldBeAbleToCreateATeam", () => {
+describe("API UserCanCreateTeam", () => {
   beforeAll(async () => {
     contextClassRef.user = randomUser();
     contextClassRef.headers = {

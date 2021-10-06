@@ -227,7 +227,21 @@ DB Tables:
 
 https://github.com/laravel/cashier-stripe/blob/13.x/src/Http/Controllers/WebhookController.php
 
+Following events should be handle by webhooks
+
 - https://stripe.com/docs/api/events/types#event_types-customer.subscription.created
 - https://stripe.com/docs/api/events/types#event_types-customer.subscription.updated
 - https://stripe.com/docs/api/events/types#event_types-customer.subscription.deleted
 - https://stripe.com/docs/api/events/types#event_types-invoice.payment_action_required
+
+The assumption here is user can subscribe to one (quantity 1) stripe item at once for now.
+
+The flow we are aiming at this point right now:
+
+1. Owner of team picks a price plan/item
+2. App creates a stripe checkout session
+3. User is redirected to Stripe to enter card details after picking a plan
+4. User is redirected back to Teams microservice with a session_id
+   4.1 A subscription is not immediately created with teams service as we wait for webhook
+5. A webhook is triggered customer.subscription.created based on which we create a subscription for user
+6. If user refreshes or calls /subscriptions -> There would be a subscription available

@@ -1,6 +1,6 @@
 const knex = requireKnex();
 
-describe("Handler AnUserShouldBeAbleToCreateATeam", () => {
+describe("Handler UserCanCreateTeam", () => {
   beforeEach(async () => {
     await knex("teams").truncate();
     await knex("team_members").truncate();

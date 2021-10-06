@@ -2,7 +2,7 @@ const contextClassRef = requireTestFunction("contextHelper");
 const randomUser = requireUtil("randomUser");
 const knex = requireKnex();
 
-describe("API AnUserCanGetTeamMembers", () => {
+describe("API UserCanViewTeamMembers", () => {
   beforeAll(async () => {
     contextClassRef.user = randomUser();
     contextClassRef.headers = {
@@ -22,6 +22,7 @@ describe("API AnUserCanGetTeamMembers", () => {
       );
     } catch (error) {
       response = error;
+      console.log(response.json());
     }
 
     expect(response.statusCode).toBe(200);
