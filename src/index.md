@@ -245,3 +245,7 @@ The flow we are aiming at this point right now:
    4.1 A subscription is not immediately created with teams service as we wait for webhook
 5. A webhook is triggered customer.subscription.created based on which we create a subscription for user
 6. If user refreshes or calls /subscriptions -> There would be a subscription available
+
+https://stripe.com/docs/billing/subscriptions/upgrade-downgrade
+
+https://stripe.com/docs/billing/subscriptions/checkout

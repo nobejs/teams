@@ -16,6 +16,9 @@ module.exports = (app) => {
         ["get", "/teams/:team_uuid", "teams/UserCanViewTeam"],
         ["delete", "/teams/:team_uuid", "teams/UserCanDeleteTeam"],
         ["post", "/teams/:team_uuid/members", "teams/UserCanCreateTeamMember"],
+        ["post", "/customers", "customers/UserCanCreateCustomer"],
+        ["put", "/customers/:customer_uuid", "customers/UserCanUpdateCustomer"],
+        ["get", "/customers", "customers/UserCanViewCustomers"],
         [
           "put",
           "/teams/:team_uuid/members/:team_member_uuid",
@@ -31,6 +34,11 @@ module.exports = (app) => {
           "post",
           "/teams/:team_uuid/stripe/subscribe",
           "stripe/TeamCanSubscribeToStripePlan",
+        ],
+        [
+          "put",
+          "/teams/:team_uuid/stripe/upgrade-downgrade/:subscription_uuid",
+          "stripe/TeamCanChangeStripePlan",
         ],
         ["post", "/stripe/webhook", "stripe/CanHandleStripeWebhook"],
       ],
