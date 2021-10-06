@@ -249,3 +249,7 @@ The flow we are aiming at this point right now:
 https://stripe.com/docs/billing/subscriptions/upgrade-downgrade
 
 https://stripe.com/docs/billing/subscriptions/checkout
+
+Tenants should be identified with Token?
+
+Tenants should be created?
