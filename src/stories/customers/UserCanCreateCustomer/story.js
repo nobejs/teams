@@ -16,6 +16,12 @@ const authorize = ({}) => {
 
 const validateInput = async (prepareResult) => {
   const constraints = {
+    user_uuid: {
+      presence: {
+        allowEmpty: false,
+        message: "^Please enter user_uuid",
+      },
+    },
     meta: {
       presence: {
         allowEmpty: false,
@@ -28,6 +34,9 @@ const validateInput = async (prepareResult) => {
         message: "^Please enter tenant",
       },
     },
+  };
+
+  const constraints2 = {
     user_uuid: {
       presence: {
         allowEmpty: false,
@@ -50,7 +59,8 @@ const validateInput = async (prepareResult) => {
     },
   };
 
-  return validator(prepareResult, constraints);
+  await validator(prepareResult, constraints);
+  await validator(prepareResult, constraints2);
 };
 
 const handle = async ({ prepareResult, storyName }) => {
