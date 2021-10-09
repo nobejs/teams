@@ -5,7 +5,7 @@ const server = httpServer({
   logger: true,
 });
 
-server.listen(process.env.PORT || 3000, (err, address) => {
+server.listen(process.env.PORT || 3000, "0.0.0.0", (err, address) => {
   if (err) {
     console.log(err);
     process.exit(1);
