@@ -5,7 +5,7 @@ name: Docker CD
 
 on:
   release:
-    types: [published, created, edited]
+    types: [published]
 
 jobs:
   build-push:
@@ -26,12 +26,12 @@ jobs:
         run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
         
       - name: Echo
-        run: echo ${{ steps.get_version.outputs.VERSION }}
+        run: echo nobedocker/teams:${{ steps.get_version.outputs.VERSION }}
 
       - name: docker build teams
         run: |
-          docker build . -t nobedocker/teams:latest
+          docker build . -t nobedocker/teams:${{ steps.get_version.outputs.VERSION }}
 
       - name: docker push
         run: |
-          docker push nobedocker/teams:latest
+          docker push nobedocker/teams:${{ steps.get_version.outputs.VERSION }}
