@@ -3,6 +3,8 @@ if (process.env.ENVFILE) {
   dotenv.config({ path: process.env.ENVFILE });
 }
 
+console.log("ENVIRONMENT", process.env);
+
 const executeStrategy = require("./core/executeStrategy");
 
 global.endpointStrategy = executeStrategy([
