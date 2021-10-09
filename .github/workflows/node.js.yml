@@ -12,6 +12,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    if: ${{ false }}
 
     services:
       # label used to access the service container
