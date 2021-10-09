@@ -4,10 +4,8 @@
 name: Docker CD
 
 on:
-  push:
-    branches: [master]
-  pull_request:
-    branches: [master]
+  release:
+    types: [published, created, edited]
 
 jobs:
   build-push:
@@ -22,6 +20,13 @@ jobs:
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}  
         run: |
           docker login -u $DOCKERHUB_USERNAME -p "$DOCKERHUB_TOKEN"
+
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+        
+      - name: Echo
+        run: echo ${{ steps.get_version.outputs.VERSION }}
 
       - name: docker build teams
         run: |
