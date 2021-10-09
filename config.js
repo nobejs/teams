@@ -3,8 +3,6 @@ if (process.env.ENVFILE) {
   dotenv.config({ path: process.env.ENVFILE });
 }
 
-console.log("ENVIRONMENT", process.env);
-
 const executeStrategy = require("./core/executeStrategy");
 
 global.endpointStrategy = executeStrategy([
@@ -48,7 +46,8 @@ module.exports = () => {
     validator: "./core/validator",
     endpoints: "./src/endpoints",
     excludeFromAuth: [
-      "GET /",
+      "GET /readiness",
+      "GET /liveness",
       "GET /teams/:uuid/stripe/subscribe",
       "POST /teams/stripe/webhook",
     ],
