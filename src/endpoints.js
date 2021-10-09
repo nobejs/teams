@@ -10,15 +10,18 @@ module.exports = (app) => {
   return [
     {
       endpoints: [
+        // Customers
+        ["post", "/customers", "customers/UserCanCreateCustomer"],
+        ["put", "/customers/:customer_uuid", "customers/UserCanUpdateCustomer"],
+        ["get", "/customers", "customers/UserCanViewCustomers"],
+
         ["get", "/teams", "teams/UserCanViewTeams"],
         ["post", "/teams", "teams/UserCanCreateTeam"],
         ["put", "/teams/:team_uuid", "teams/UserCanUpdateTeam"],
         ["get", "/teams/:team_uuid", "teams/UserCanViewTeam"],
         ["delete", "/teams/:team_uuid", "teams/UserCanDeleteTeam"],
         ["post", "/teams/:team_uuid/members", "teams/UserCanCreateTeamMember"],
-        ["post", "/customers", "customers/UserCanCreateCustomer"],
-        ["put", "/customers/:customer_uuid", "customers/UserCanUpdateCustomer"],
-        ["get", "/customers", "customers/UserCanViewCustomers"],
+
         [
           "put",
           "/teams/:team_uuid/members/:team_member_uuid",

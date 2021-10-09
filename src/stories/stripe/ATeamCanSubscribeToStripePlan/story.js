@@ -4,11 +4,7 @@ const TeamMemberRepo = requireRepo("teamMember");
 const createCheckoutSession = require("../../../functions/stripe/createCheckoutSession");
 
 const prepare = async ({ req }) => {
-  const payload = findKeysFromRequest(req, [
-    "uuid",
-    "price_id",
-    "customer_email",
-  ]);
+  const payload = findKeysFromRequest(req, ["uuid", "price_id", "customer_id"]);
   payload["invoking_user_uuid"] = req.user;
   return payload;
 };
@@ -44,10 +40,10 @@ const validateInput = async (prepareResult) => {
         message: "^Please choose a plan",
       },
     },
-    customer_email: {
+    customer_id: {
       presence: {
         allowEmpty: false,
-        message: "^Please choose a customer_email",
+        message: "^Please choose a customer_id",
       },
     },
   };
@@ -61,7 +57,7 @@ const handle = async ({ prepareResult, storyName }) => {
     let result = await createCheckoutSession(
       `${process.env.APP_URL}/teams/${prepareResult.uuid}/stripe/subscribe?session_id={CHECKOUT_SESSION_ID}`,
       `${process.env.APP_URL}/teams/${prepareResult.uuid}/stripe/subscribe?status=cancelled`,
-      prepareResult.customer_email,
+      prepareResult.customer_id,
       [
         {
           price: prepareResult.price_id, //"price_1JZvOrI0sgPwdxJLCgNoqHjy",
