@@ -46,17 +46,32 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "yarn"
 
-      - name: Install dependencies
-        run: yarn
+      # - name: Install dependencies
+      #   run: yarn
 
-      - name: Run tests
-        run: yarn test:github
+      # - name: Run tests
+      #   run: yarn test:github
+      #   env:
+      #     DB_HOST: localhost
+      #     DB_USERNAME: postgres
+      #     DB_PASSWORD: postgres
+      #     DB_NAME: postgres
+      #     DB_PORT: 5432
+      #     DB_DIALECT: postgres
+      #     DEBUG: true
+      #     PORT: 3000
+
+      - name: docker login
         env:
-          DB_HOST: localhost
-          DB_USERNAME: postgres
-          DB_PASSWORD: postgres
-          DB_NAME: postgres
-          DB_PORT: 5432
-          DB_DIALECT: postgres
-          DEBUG: true
-          PORT: 3000
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}   
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}  
+        run: |
+          docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_USERNAME
+
+      - name: docker build teams
+        run: |
+          docker build . -t nobejs/teams:latest
+
+      - name: docker push
+        run: |
+          docker push nobejs/teams:latest
