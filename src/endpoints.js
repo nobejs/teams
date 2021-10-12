@@ -20,19 +20,31 @@ module.exports = (app) => {
         ["put", "/teams/:team_uuid", "Teams/UserCanUpdateTeam"],
         ["get", "/teams/:team_uuid", "Teams/UserCanViewTeam"],
         ["delete", "/teams/:team_uuid", "Teams/UserCanDeleteTeam"],
-        ["post", "/teams/:team_uuid/members", "Teams/UserCanCreateTeamMember"],
 
+        // Team members
+
+        [
+          "post",
+          "/teams/:team_uuid/members",
+          "TeamMembers/UserCanCreateTeamMember",
+        ],
         [
           "put",
           "/teams/:team_uuid/members/:team_member_uuid",
-          "Teams/UserCanUpdateTeamMember",
+          "TeamMembers/UserCanUpdateTeamMember",
         ],
         [
           "delete",
           "/teams/:team_uuid/members/:team_member_uuid",
-          "Teams/UserCanDeleteTeamMember",
+          "TeamMembers/UserCanDeleteTeamMember",
         ],
-        ["get", "/teams/:team_uuid/members", "Teams/UserCanViewTeamMembers"],
+        [
+          "get",
+          "/teams/:team_uuid/members",
+          "TeamMembers/UserCanViewTeamMembers",
+        ],
+
+        // Subscriptions
         [
           "post",
           "/teams/:team_uuid/stripe/subscribe",
