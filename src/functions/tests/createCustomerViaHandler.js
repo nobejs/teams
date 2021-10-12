@@ -6,7 +6,7 @@ module.exports = async (
 ) => {
   let respondResult;
   try {
-    result = await testStrategy("customers/UserCanCreateCustomer", {
+    result = await testStrategy("Customers/UserCanCreateCustomer", {
       prepareResult: payload,
     });
     respondResult = result.respondResult;

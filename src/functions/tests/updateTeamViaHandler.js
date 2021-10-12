@@ -2,7 +2,7 @@ module.exports = async (payload) => {
   let result;
   let respondResult;
   try {
-    result = await testStrategy("teams/UserCanUpdateTeam", {
+    result = await testStrategy("Teams/UserCanUpdateTeam", {
       prepareResult: payload,
     });
     respondResult = result.respondResult;
