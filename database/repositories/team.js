@@ -35,6 +35,15 @@ const create = async (payload) => {
   }
 };
 
+const fetchTeamsFromUuids = async (teamUuids) => {
+  try {
+    let teams = await knex("teams").whereIn("uuid", teamUuids).returning("*");
+    return teams;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const first = async (where = {}) => {
   try {
     let teams = await knex("teams").where(where).first();
@@ -62,4 +71,5 @@ module.exports = {
   first,
   update,
   countAll,
+  fetchTeamsFromUuids,
 };

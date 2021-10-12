@@ -11,39 +11,39 @@ module.exports = (app) => {
     {
       endpoints: [
         // Customers
-        ["post", "/customers", "customers/UserCanCreateCustomer"],
-        ["put", "/customers/:customer_uuid", "customers/UserCanUpdateCustomer"],
-        ["get", "/customers", "customers/UserCanViewCustomers"],
+        // ["post", "/customers", "customers/UserCanCreateCustomer"],
+        // ["put", "/customers/:customer_uuid", "customers/UserCanUpdateCustomer"],
+        // ["get", "/customers", "customers/UserCanViewCustomers"],
 
-        ["get", "/teams", "teams/UserCanViewTeams"],
-        ["post", "/teams", "teams/UserCanCreateTeam"],
-        ["put", "/teams/:team_uuid", "teams/UserCanUpdateTeam"],
-        ["get", "/teams/:team_uuid", "teams/UserCanViewTeam"],
-        ["delete", "/teams/:team_uuid", "teams/UserCanDeleteTeam"],
-        ["post", "/teams/:team_uuid/members", "teams/UserCanCreateTeamMember"],
+        ["get", "/teams", "Teams/UserCanViewTeams"],
+        ["post", "/teams", "Teams/UserCanCreateTeam"],
+        ["put", "/teams/:team_uuid", "Teams/UserCanUpdateTeam"],
+        ["get", "/teams/:team_uuid", "Teams/UserCanViewTeam"],
+        ["delete", "/teams/:team_uuid", "Teams/UserCanDeleteTeam"],
+        ["post", "/teams/:team_uuid/members", "Teams/UserCanCreateTeamMember"],
 
         [
           "put",
           "/teams/:team_uuid/members/:team_member_uuid",
-          "teams/UserCanUpdateTeamMember",
+          "Teams/UserCanUpdateTeamMember",
         ],
         [
           "delete",
           "/teams/:team_uuid/members/:team_member_uuid",
-          "teams/UserCanDeleteTeamMember",
+          "Teams/UserCanDeleteTeamMember",
         ],
-        ["get", "/teams/:team_uuid/members", "teams/UserCanViewTeamMembers"],
+        ["get", "/teams/:team_uuid/members", "Teams/UserCanViewTeamMembers"],
         [
           "post",
           "/teams/:team_uuid/stripe/subscribe",
-          "stripe/TeamCanSubscribeToStripePlan",
+          "Stripe/TeamCanSubscribeToStripePlan",
         ],
         [
           "put",
           "/teams/:team_uuid/stripe/upgrade-downgrade/:subscription_uuid",
-          "stripe/TeamCanChangeStripePlan",
+          "Stripe/TeamCanChangeStripePlan",
         ],
-        ["post", "/stripe/webhook", "stripe/CanHandleStripeWebhook"],
+        ["post", "/stripe/webhook", "Stripe/CanHandleStripeWebhook"],
       ],
     },
   ];
