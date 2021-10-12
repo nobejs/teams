@@ -37,6 +37,7 @@ const getTeamsAndMembers = async (where = {}) => {
           "team_members.uuid",
           "team_members.uuid",
           "team_members.user_uuid",
+          "team_members.email",
           "team_members.status",
           "team_members.role",
         ])
@@ -70,8 +71,22 @@ const create = async (payload) => {
   }
 };
 
+const update = async (member_uuid, payload) => {
+  try {
+    payload["updated_at"] = new Date().toISOString();
+    let team = await knex("team_members")
+      .where("uuid", "=", member_uuid)
+      .update(payload)
+      .returning("*");
+    return team[0];
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   create,
+  update,
   first,
   countAll,
   findAll,
