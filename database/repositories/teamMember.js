@@ -23,7 +23,7 @@ const findAll = async (where = {}) => {
   }
 };
 
-const getTeamsForAUser = async (where = {}) => {
+const getTeamsAndMembers = async (where = {}) => {
   try {
     let memberships = await knex("teams")
       .join("team_members", "teams.uuid", "=", "team_members.team_uuid")
@@ -75,5 +75,5 @@ module.exports = {
   first,
   countAll,
   findAll,
-  getTeamsForAUser,
+  getTeamsAndMembers,
 };

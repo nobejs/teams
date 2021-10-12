@@ -22,7 +22,7 @@ const handle = async ({ prepareResult }) => {
     payload["teams.tenant"] = prepareResult.tenant;
   }
 
-  return await TeamMemberRepo.getTeamsForAUser(payload);
+  return await TeamMemberRepo.getTeamsAndMembers(payload);
 };
 
 const respond = ({ handleResult }) => {

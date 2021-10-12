@@ -29,13 +29,13 @@ const authorize = ({ augmentPrepareResult }) => {
 };
 
 const handle = async ({ prepareResult }) => {
-  return await TeamMemberRepo.findAll({
-    team_uuid: prepareResult.team_uuid,
+  return await TeamMemberRepo.getTeamsAndMembers({
+    "team_members.team_uuid": prepareResult.team_uuid,
   });
 };
 
-const respond = async ({ handleResult }) => {
-  return await TeamMemberSerializer.list(handleResult);
+const respond = ({ handleResult }) => {
+  return handleResult;
 };
 
 module.exports = {
