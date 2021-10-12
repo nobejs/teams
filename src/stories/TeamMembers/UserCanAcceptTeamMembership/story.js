@@ -4,20 +4,6 @@ const findKeysFromRequest = requireUtil("findKeysFromRequest");
 const getUser = requireFunction("getUser");
 const TeamMemberSerializer = requireSerializer("team_member");
 
-const validateAction = async (payload) => {
-  const constraints = {
-    action: {
-      presence: {
-        allowEmpty: false,
-        message: "^Please enter action",
-      },
-      inclusion: ["accept_invite"],
-    },
-  };
-
-  await validator(payload, constraints);
-};
-
 const prepare = async ({ req }) => {
   const payload = findKeysFromRequest(req, [
     "team_uuid",
@@ -26,7 +12,7 @@ const prepare = async ({ req }) => {
   ]);
   payload["invoking_user_uuid"] = req.user;
   payload["token"] = req.token;
-  await validateAction(payload);
+
   return payload;
 };
 
@@ -76,11 +62,11 @@ const authorize = async ({ augmentPrepareResult }) => {
     }
 
     if (
-      augmentPrepareResult.teamMember.email === augmentPrepareResult.user.email
+      augmentPrepareResult.teamMember.email !== augmentPrepareResult.user.email
     ) {
       throw {
         statusCode: 422,
-        message: "Invalid",
+        message: "Invalid User",
       };
     }
   }

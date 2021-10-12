@@ -1,10 +1,10 @@
 const debugLogger = requireUtil("debugLogger");
 
-describe("Test Handler TeamMembers/UserCanUpdateTeamMember", () => {
+describe("Test Handler TeamMembers/UserCanAcceptTeamMembership", () => {
   it("dummy_story_which_will_pass", async () => {
     let result = {};
     try {
-      result = await testStrategy("TeamMembers/UserCanUpdateTeamMember", {
+      result = await testStrategy("TeamMembers/UserCanAcceptTeamMembership", {
         prepareResult: {},
       });
     } catch (error) {

@@ -29,9 +29,9 @@ module.exports = (app) => {
           "TeamMembers/UserCanCreateTeamMember",
         ],
         [
-          "put",
-          "/teams/:team_uuid/members/:team_member_uuid",
-          "TeamMembers/UserCanUpdateTeamMember",
+          "post",
+          "/teams/:team_uuid/members/:team_member_uuid/accept",
+          "TeamMembers/UserCanAcceptTeamMembership",
         ],
         [
           "delete",
