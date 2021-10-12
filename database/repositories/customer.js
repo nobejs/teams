@@ -33,7 +33,7 @@ const findAll = async (where = {}, whereNot = {}) => {
     let customers = await knex("customers")
       .where(where)
       .whereNot(whereNot)
-      .returning("*");
+      .select("*");
     return customers;
   } catch (error) {
     throw error;

@@ -1,10 +1,10 @@
 const TeamMemberRepo = requireRepo("teamMember");
-const TeamSerializer = requireSerializer("team");
-const TeamRepo = requireRepo("team");
-const TeamMemberSerializer = requireSerializer("team_member");
+const knex = requireKnex();
+const findKeysFromRequest = requireUtil("findKeysFromRequest");
+const underscoredColumns = requireUtil("underscoredColumns");
 
 const prepare = async ({ req }) => {
-  const payload = {};
+  const payload = findKeysFromRequest(req, ["tenant"]);
   payload["invoking_user_uuid"] = req.user;
   return payload;
 };
@@ -14,24 +14,15 @@ const authorize = ({}) => {
 };
 
 const handle = async ({ prepareResult }) => {
-  const memberships = await TeamMemberRepo.findAll({
-    user_uuid: prepareResult.invoking_user_uuid,
-  });
+  let payload = {
+    "team_members.user_uuid": prepareResult.invoking_user_uuid,
+  };
 
-  const teamUuids = memberships.map((m) => m.team_uuid);
+  if (prepareResult.tenant) {
+    payload["teams.tenant"] = prepareResult.tenant;
+  }
 
-  const teams = await TeamRepo.fetchTeamsFromUuids(teamUuids);
-
-  const membershipsWithTeamData = await Promise.all(
-    memberships.map(async (m) => {
-      m = await TeamMemberSerializer.single(m);
-      let team = teams.find((t) => t.uuid === m.team_uuid);
-      m["team"] = await TeamSerializer.single(team);
-      return m;
-    })
-  );
-
-  return membershipsWithTeamData;
+  return await TeamMemberRepo.getTeamsForAUser(payload);
 };
 
 const respond = ({ handleResult }) => {
