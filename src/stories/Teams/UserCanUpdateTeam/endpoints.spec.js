@@ -1,4 +1,4 @@
-const contextClassRef = requireTestFunction("contextHelper");
+const contextClassRef = requireUtil("contextHelper");
 const randomUser = requireUtil("randomUser");
 const knex = requireKnex();
 

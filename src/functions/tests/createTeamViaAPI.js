@@ -1,5 +1,5 @@
 const httpServer = requireHttpServer();
-const contextClassRef = requireTestFunction("contextHelper");
+const contextClassRef = requireUtil("contextHelper");
 
 module.exports = async (
   payload = {
