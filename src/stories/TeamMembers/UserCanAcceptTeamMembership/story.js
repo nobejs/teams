@@ -5,11 +5,7 @@ const getUser = requireFunction("getUser");
 const TeamMemberSerializer = requireSerializer("team_member");
 
 const prepare = async ({ req }) => {
-  const payload = findKeysFromRequest(req, [
-    "team_uuid",
-    "action",
-    "team_member_uuid",
-  ]);
+  const payload = findKeysFromRequest(req, ["team_member_uuid"]);
   payload["invoking_user_uuid"] = req.user;
   payload["token"] = req.token;
 
