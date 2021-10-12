@@ -1,14 +1,13 @@
 const CustomerRepo = requireRepo("customer");
-const findKeysFromRequest = requireUtil("findKeysFromRequest");
 const CustomerSerializer = requireSerializer("customer");
 
 const prepare = ({ req }) => {
-  const payload = findKeysFromRequest(req, []);
+  const payload = {};
   payload["user_uuid"] = req.user;
   return payload;
 };
 
-const authorize = ({ prepareResult }) => {
+const authorize = ({}) => {
   return true;
 };
 
