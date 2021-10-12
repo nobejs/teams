@@ -5,6 +5,7 @@ const countAll = async (where = {}, whereNot = {}) => {
   try {
     let teams = await knex("teams")
       .where(where)
+      .whereNull("deleted_at")
       .whereNot(whereNot)
       .count({ count: "*" })
       .first();
@@ -46,7 +47,10 @@ const fetchTeamsFromUuids = async (teamUuids) => {
 
 const first = async (where = {}) => {
   try {
-    let teams = await knex("teams").where(where).first();
+    let teams = await knex("teams")
+      .where(where)
+      .whereNull("deleted_at")
+      .first();
     return teams;
   } catch (error) {
     throw error;

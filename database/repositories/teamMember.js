@@ -28,6 +28,7 @@ const getTeamsAndMembers = async (where = {}) => {
     let memberships = await knex("teams")
       .join("team_members", "teams.uuid", "=", "team_members.team_uuid")
       .where(where)
+      .whereNull("team_members.deleted_at")
       .select(
         underscoredColumns([
           "teams.uuid",
@@ -84,11 +85,24 @@ const update = async (member_uuid, payload) => {
   }
 };
 
+const del = async (where) => {
+  try {
+    let team = await knex("team_members").where(where).update({
+      deleted_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    });
+    return team[0];
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   create,
   update,
   first,
   countAll,
   findAll,
+  del,
   getTeamsAndMembers,
 };
