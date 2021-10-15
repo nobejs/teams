@@ -16,7 +16,6 @@ module.exports = (options) => {
     });
 
     req.on("error", (err) => {
-      console.log("https", err);
       reject(err);
     });
 
