@@ -36,7 +36,7 @@ const handle = async ({ prepareResult, storyName }) => {
 };
 
 const respond = async ({ handleResult }) => {
-  return await TeamSerializer.single(handleResult);
+  return await TeamSerializer.single(handleResult, ["subscription"]);
 };
 
 module.exports = {
