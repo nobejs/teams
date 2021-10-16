@@ -1,0 +1,187 @@
+const findKeysFromRequest = requireUtil("findKeysFromRequest");
+const TeamMemberRepo = requireRepo("teamMember");
+const TeamRepo = requireRepo("team");
+const CustomerRepo = requireRepo("customer");
+const getUser = requireFunction("getUser");
+const validator = requireValidator();
+const getStripePrice = requireFunction("stripe/retrievePrice");
+const stripeCreateCustomer = requireFunction("stripe/createCustomer");
+const updateSubscription = requireFunction("stripe/updateSubscription");
+const retrieveSubscription = requireFunction("stripe/retrieveSubscription");
+const listSubscriptionItems = requireFunction("stripe/listSubscriptionItems");
+
+const prepare = async ({ req }) => {
+  const payload = findKeysFromRequest(req, [
+    "team_uuid",
+    "price_id",
+    "success_url",
+    "cancelled_url",
+  ]);
+  payload["invoking_user_uuid"] = req.user;
+  payload["token"] = req.token;
+  return payload;
+};
+
+const augmentPrepare = async ({ prepareResult }) => {
+  let user = {};
+  let team = {};
+  let teamMember = {};
+  let stripePrice = {};
+  let stripeCustomer = {};
+  let subscription = {};
+
+  try {
+    team = await TeamRepo.first({
+      uuid: prepareResult.team_uuid,
+    });
+  } catch (error) {
+    throw {
+      message: "Team not found",
+      statusCode: 404,
+      error: error.message,
+    };
+  }
+
+  try {
+    teamMember = await TeamMemberRepo.first({
+      team_uuid: prepareResult.team_uuid,
+      user_uuid: prepareResult.invoking_user_uuid,
+    });
+  } catch (error) {
+    throw {
+      message: "Team Member not found",
+      statusCode: 404,
+      error: error.message,
+    };
+  }
+
+  try {
+    user = await getUser(prepareResult["token"]);
+  } catch (error) {
+    throw {
+      statusCode: 401,
+      message: "Unauthorized",
+    };
+  }
+
+  try {
+    stripePrice = await getStripePrice(prepareResult["price_id"]);
+  } catch (error) {
+    throw {
+      statusCode: 401,
+      message: "Invalid Price",
+    };
+  }
+
+  try {
+    stripeCustomer = await CustomerRepo.first({
+      user_uuid: prepareResult.invoking_user_uuid,
+    });
+
+    if (stripeCustomer) {
+    } else {
+      stripeCustomer = await stripeCreateCustomer({
+        email: user.email,
+        metadata: {
+          user_id: prepareResult.invoking_user_uuid,
+        },
+      });
+
+      stripeCustomer = await CustomerRepo.create({
+        user_uuid: prepareResult.invoking_user_uuid,
+        stripe_id: stripeCustomer["id"],
+        tenant: "na",
+      });
+    }
+  } catch (error) {
+    throw {
+      statusCode: 401,
+      message: "Customer couldn't be created",
+      error: error.message,
+    };
+  }
+
+  try {
+    // subscription = find current active subscription for this team
+    subscription = {
+      subscription_id: "sub_1Jl5ufI0sgPwdxJLcst6PAAz",
+    };
+  } catch (error) {
+    throw {
+      statusCode: 401,
+      message: "Customer couldn't be created",
+      error: error.message,
+    };
+  }
+
+  return { teamMember, user, stripePrice, stripeCustomer, subscription };
+};
+
+const authorize = ({ augmentPrepareResult }) => {
+  if (augmentPrepareResult.teamMember.role !== "owner") {
+    throw {
+      message: "Only owner can change subscription",
+      statusCode: 403,
+    };
+  }
+
+  return true;
+};
+
+const validateInput = async (prepareResult) => {
+  const constraints = {
+    price_id: {
+      presence: {
+        allowEmpty: false,
+        message: "^Please enter price_id",
+      },
+    },
+    subscription_id: {
+      presence: {
+        allowEmpty: false,
+        message: "^Please enter price_id",
+      },
+    },
+  };
+
+  return validator(prepareResult, constraints);
+};
+
+const handle = async ({ prepareResult, augmentPrepareResult }) => {
+  await validateInput({
+    ...prepareResult,
+    ...augmentPrepareResult.subscription,
+  });
+
+  try {
+    let result = await listSubscriptionItems(
+      augmentPrepareResult.subscription.subscription_id
+    );
+
+    result = await updateSubscription(
+      augmentPrepareResult.subscription.subscription_id,
+      [
+        {
+          id: result.data[0]["id"],
+          price: prepareResult.price_id,
+          quantity: 1,
+        },
+      ]
+    );
+    return result;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const respond = ({ handleResult }) => {
+  return handleResult;
+};
+
+module.exports = {
+  prepare,
+  augmentPrepare,
+  authorize,
+  handle,
+  respond,
+};
