@@ -32,6 +32,7 @@ const handle = async ({ prepareResult, storyName }) => {
           "customer",
           "id",
           "trial_end",
+          "cancel_at",
           "status",
           "metadata",
           "items.data",
@@ -54,6 +55,9 @@ const handle = async ({ prepareResult, storyName }) => {
               trial_ends_at: hookData.trial_end
                 ? new Date(hookData.trial_end * 1000).toISOString()
                 : subscription.trial_ends_at,
+              ends_at: hookData.cancel_at
+                ? new Date(hookData.cancel_at * 1000).toISOString()
+                : subscription.ends_at,
             };
             await SubscriptionRepo.update(
               subscription.uuid,
@@ -138,19 +142,8 @@ const handle = async ({ prepareResult, storyName }) => {
           console.log(error);
           throw error;
         }
-
         break;
 
-      case "invoice.paid":
-        // Continue to provision the subscription as payments continue to be made.
-        // Store the status in your database and check when a user accesses your service.
-        // This approach helps you avoid hitting rate limits.
-        break;
-      case "invoice.payment_failed":
-        // The payment failed or the customer does not have a valid payment method.
-        // The subscription becomes past_due. Notify your customer and send them to the
-        // customer portal to update their payment information.
-        break;
       default:
         console.log("Unhandled", eventType);
       // Unhandled event type

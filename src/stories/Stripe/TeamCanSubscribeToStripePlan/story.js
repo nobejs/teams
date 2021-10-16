@@ -158,7 +158,7 @@ const handle = async ({ prepareResult, augmentPrepareResult }) => {
         team_uuid: prepareResult.team_uuid,
       },
       subscription_data: {
-        trial_period_days: 7,
+        // trial_period_days: 7,
         metadata: {
           team_uuid: prepareResult.team_uuid,
           name: augmentPrepareResult.stripePrice["nickname"],

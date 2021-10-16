@@ -5,6 +5,7 @@ module.exports = async (instance) => {
     "uuid",
     "name",
     "stripe_id",
+    "customer_id",
     "status",
     "trial_ends_at",
     "ends_at",
