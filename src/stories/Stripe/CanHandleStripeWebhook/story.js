@@ -1,5 +1,6 @@
 const constructEvent = requireFunction("stripe/constructEvent");
 const pickKeysFromObject = requireUtil("pickKeysFromObject");
+const SubscriptionRepo = requireRepo("subscription");
 
 const prepare = async ({ req }) => {
   try {
@@ -17,7 +18,7 @@ const authorize = ({ prepareResult }) => {
   return true;
 };
 
-const handle = ({ prepareResult, storyName }) => {
+const handle = async ({ prepareResult, storyName }) => {
   const eventType = prepareResult.eventType;
   const eventData = prepareResult.data;
 
@@ -47,18 +48,46 @@ const handle = ({ prepareResult, storyName }) => {
         break;
 
       case "customer.subscription.created":
-        console.log(
-          "customer.subscription.created",
-          pickKeysFromObject(eventObject, [
-            "customer",
-            "subscription",
-            "trial_end",
-            "status",
-            "metadata",
-            "items.data",
-            "sometihng",
-          ])
-        );
+        const hookData = pickKeysFromObject(eventObject, [
+          "customer",
+          "id",
+          "trial_end",
+          "status",
+          "metadata",
+          "items.data",
+          "sometihng",
+        ]);
+
+        // console.log("customer.subscription.created", hookData);
+
+        try {
+          const subscription = await SubscriptionRepo.first({
+            gateway: "stripe",
+            subscription_id: hookData.id,
+          });
+
+          if (!subscription) {
+            const createSubscriptionPayload = {
+              gateway: "stripe",
+              team_uuid: hookData.metadata.team_uuid,
+              name: hookData.metadata.team_uuid,
+              subscription_id: hookData.id,
+              customer_id: hookData.customer,
+              status: hookData.status,
+              items: JSON.stringify(hookData["items.data"]),
+              trial_ends_at: hookData.trial_end
+                ? new Date(hookData.trial_end * 1000).toISOString()
+                : null,
+            };
+            console.log("create subscription", createSubscriptionPayload);
+            await SubscriptionRepo.create(createSubscriptionPayload);
+          } else {
+            console.log("Found subscription", subscription.items[0]["id"]);
+          }
+        } catch (error) {
+          console.log("error", error);
+        }
+
         // If the subscription is already created against a team,
         break;
       case "invoice.paid":
