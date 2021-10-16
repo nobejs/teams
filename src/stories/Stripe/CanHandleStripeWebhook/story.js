@@ -145,7 +145,7 @@ const handle = async ({ prepareResult, storyName }) => {
         break;
 
       default:
-        console.log("Unhandled", eventType);
+        console.log("Unhandled", eventType, eventData);
       // Unhandled event type
     }
   } else {
