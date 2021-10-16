@@ -67,6 +67,7 @@ const augmentPrepare = async ({ prepareResult }) => {
     throw {
       statusCode: 401,
       message: "Invalid Price",
+      error: error.message,
     };
   }
 
@@ -141,17 +142,33 @@ const handle = async ({ prepareResult, augmentPrepareResult }) => {
   await validateInput(prepareResult);
 
   try {
-    let result = await createCheckoutSession(
-      prepareResult.success_url,
-      prepareResult.cancelled_url,
-      augmentPrepareResult["stripeCustomer"]["stripe_id"],
-      [
+    console.log("stripePrice", augmentPrepareResult.stripePrice);
+
+    let payload = {
+      customer: augmentPrepareResult["stripeCustomer"]["stripe_id"],
+      mode: "subscription",
+      payment_method_types: ["card"],
+      line_items: [
         {
           price: prepareResult.price_id,
           quantity: 1,
         },
-      ]
-    );
+      ],
+      metadata: {
+        team_uuid: prepareResult.team_uuid,
+      },
+      subscription_data: {
+        trial_period_days: 7,
+        metadata: {
+          team_uuid: prepareResult.team_uuid,
+          name: augmentPrepareResult.stripePrice["nickname"],
+        },
+      },
+      success_url: prepareResult.success_url,
+      cancel_url: prepareResult.cancelled_url,
+    };
+
+    let result = await createCheckoutSession(payload);
     return result;
   } catch (error) {
     throw error;

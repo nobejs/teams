@@ -55,7 +55,7 @@ module.exports = (app) => {
           "/teams/:team_uuid/stripe/change",
           "Stripe/TeamCanChangeStripePlan",
         ],
-        ["post", "/stripe/webhook", "Stripe/CanHandleStripeWebhook"],
+        ["post", "/teams/stripe/webhook", "Stripe/CanHandleStripeWebhook"],
       ],
     },
   ];
