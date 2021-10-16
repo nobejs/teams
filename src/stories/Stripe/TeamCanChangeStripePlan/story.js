@@ -2,12 +2,12 @@ const findKeysFromRequest = requireUtil("findKeysFromRequest");
 const TeamMemberRepo = requireRepo("teamMember");
 const TeamRepo = requireRepo("team");
 const CustomerRepo = requireRepo("customer");
+const SubscriptionRepo = requireRepo("subscription");
 const getUser = requireFunction("getUser");
 const validator = requireValidator();
 const getStripePrice = requireFunction("stripe/retrievePrice");
 const stripeCreateCustomer = requireFunction("stripe/createCustomer");
 const updateSubscription = requireFunction("stripe/updateSubscription");
-const retrieveSubscription = requireFunction("stripe/retrieveSubscription");
 const listSubscriptionItems = requireFunction("stripe/listSubscriptionItems");
 
 const prepare = async ({ req }) => {
@@ -102,14 +102,13 @@ const augmentPrepare = async ({ prepareResult }) => {
   }
 
   try {
-    // subscription = find current active subscription for this team
-    subscription = {
-      subscription_id: "sub_1Jl5ufI0sgPwdxJLcst6PAAz",
-    };
+    subscription = await SubscriptionRepo.first({
+      team_uuid: prepareResult.team_uuid,
+    });
   } catch (error) {
     throw {
       statusCode: 401,
-      message: "Customer couldn't be created",
+      message: "Subscription not found",
       error: error.message,
     };
   }
@@ -160,13 +159,19 @@ const handle = async ({ prepareResult, augmentPrepareResult }) => {
 
     result = await updateSubscription(
       augmentPrepareResult.subscription.subscription_id,
-      [
-        {
-          id: result.data[0]["id"],
-          price: prepareResult.price_id,
-          quantity: 1,
+      {
+        metadata: {
+          team_uuid: prepareResult.team_uuid,
+          name: augmentPrepareResult.stripePrice["nickname"],
         },
-      ]
+        items: [
+          {
+            id: result.data[0]["id"],
+            price: prepareResult.price_id,
+            quantity: 1,
+          },
+        ],
+      }
     );
     return result;
   } catch (error) {
