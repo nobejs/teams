@@ -16,7 +16,8 @@
     "db": "knex",
     "db:migrate": "knex migrate:latest",
     "db:rollback": "knex migrate:rollback",
-    "db:migration": "knex migrate:make"
+    "db:migration": "knex migrate:make",
+    "open": "lt --port 3000 --subdomain nobe"
   },
   "devDependencies": {
     "jest-cli": "^27.2.4",

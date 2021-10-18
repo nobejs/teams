@@ -1,8 +1,8 @@
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-module.exports = async (payload) => {
+module.exports = async (subscription_id) => {
   try {
-    const session = await stripe.checkout.sessions.create(payload);
+    const session = await stripe.subscriptions.retrieve(subscription_id);
 
     return session;
   } catch (error) {

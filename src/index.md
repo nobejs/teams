@@ -217,13 +217,17 @@ DB Tables:
 
 - uuid
 - team_uuid
-- gateway (stripe)
-- status
-- ends_on
+- name
+- gateway (stripe) // defaulted to stripe
 - subscription_id
+- customer_id // come from stripe
+- status // come from stripe
+- trial_ends_at //
+- ends_at // From stripe - cancel_at_period_end, cancel_at
+- items //
 - created_at
 - updated_at
-- deleted_at
+- deleted_at // when cancelled
 
 https://github.com/laravel/cashier-stripe/blob/13.x/src/Http/Controllers/WebhookController.php
 

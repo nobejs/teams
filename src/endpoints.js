@@ -51,11 +51,11 @@ module.exports = (app) => {
           "Stripe/TeamCanSubscribeToStripePlan",
         ],
         [
-          "put",
-          "/teams/:team_uuid/stripe/upgrade-downgrade/:subscription_uuid",
+          "post",
+          "/teams/:team_uuid/stripe/change",
           "Stripe/TeamCanChangeStripePlan",
         ],
-        ["post", "/stripe/webhook", "Stripe/CanHandleStripeWebhook"],
+        ["post", "/teams/stripe/webhook", "Stripe/CanHandleStripeWebhook"],
       ],
     },
   ];

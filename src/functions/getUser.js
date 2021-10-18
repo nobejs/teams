@@ -4,7 +4,7 @@ const url = require("url");
 module.exports = (token) => {
   var authTokenOptions = Object.assign(
     {},
-    url.parse(`${process.env.AUTH_ENDPOINT}/user`),
+    url.parse(`${process.env.AUTH_ENDPOINT}`),
     {
       headers: {
         "Content-Type": "application/json",

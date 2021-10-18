@@ -42,8 +42,8 @@ const findAll = async (where = {}, whereNot = {}) => {
 
 const first = async (where = {}) => {
   try {
-    let teams = await knex("teams").where(where).first();
-    return teams;
+    let customers = await knex("customers").where(where).first();
+    return customers;
   } catch (error) {
     throw error;
   }
