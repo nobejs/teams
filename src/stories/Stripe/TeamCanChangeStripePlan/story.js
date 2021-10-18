@@ -16,7 +16,6 @@ const prepare = async ({ req }) => {
     "price_id",
     "success_url",
     "cancelled_url",
-    "exclude_quantity",
   ]);
   payload["invoking_user_uuid"] = req.user;
   payload["token"] = req.token;
@@ -160,7 +159,7 @@ const handle = async ({ prepareResult, augmentPrepareResult }) => {
 
     let line_items = [];
 
-    if (prepareResult.exclude_quantity) {
+    if (augmentPrepareResult.stripePrice.recurring.usage_type === "metered") {
       line_items = [
         {
           id: result.data[0]["id"],

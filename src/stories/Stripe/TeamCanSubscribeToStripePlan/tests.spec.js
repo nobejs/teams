@@ -52,7 +52,6 @@ describe("Test Handler Stripe/TeamCanSubscribeToStripePlan", () => {
         prepareResult: {
           team_uuid: createdTeam.uuid,
           price_id: process.env.METERED_PRICE_ID,
-          exclude_quantity: "true",
           success_url: "https://example.com",
           cancelled_url: "https://example.com",
           invoking_user_uuid: "63411080-cced-4a5e-8230-8673c3172308",
