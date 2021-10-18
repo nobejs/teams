@@ -105,11 +105,18 @@ const augmentPrepare = async ({ prepareResult }) => {
     subscription = await SubscriptionRepo.first({
       team_uuid: prepareResult.team_uuid,
     });
+
+    if (!subscription) {
+      throw {
+        statusCode: 401,
+        message: "Subscription not found",
+        error: error.message,
+      };
+    }
   } catch (error) {
     throw {
-      statusCode: 401,
+      statusCode: 422,
       message: "Subscription not found",
-      error: error.message,
     };
   }
 

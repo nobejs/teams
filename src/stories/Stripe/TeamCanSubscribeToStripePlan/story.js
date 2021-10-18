@@ -7,6 +7,7 @@ const validator = requireValidator();
 const getStripePrice = requireFunction("stripe/retrievePrice");
 const stripeCreateCustomer = requireFunction("stripe/createCustomer");
 const createCheckoutSession = requireFunction("stripe/createCheckoutSession");
+const SubscriptionRepo = requireRepo("subscription");
 
 const prepare = async ({ req }) => {
   const payload = findKeysFromRequest(req, [
@@ -26,6 +27,7 @@ const augmentPrepare = async ({ prepareResult }) => {
   let teamMember = {};
   let stripePrice = {};
   let stripeCustomer = {};
+  let subscription = {};
 
   try {
     team = await TeamRepo.first({
@@ -95,6 +97,25 @@ const augmentPrepare = async ({ prepareResult }) => {
     throw {
       statusCode: 401,
       message: "Customer couldn't be created",
+      error: error.message,
+    };
+  }
+
+  try {
+    subscription = await SubscriptionRepo.first({
+      team_uuid: prepareResult.team_uuid,
+    });
+
+    if (subscription) {
+      throw {
+        statusCode: 422,
+        message: "Team already has subscription",
+      };
+    }
+  } catch (error) {
+    throw {
+      statusCode: 401,
+      message: "Subscription not found",
       error: error.message,
     };
   }
