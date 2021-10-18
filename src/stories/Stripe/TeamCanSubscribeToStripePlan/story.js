@@ -113,11 +113,7 @@ const augmentPrepare = async ({ prepareResult }) => {
       };
     }
   } catch (error) {
-    throw {
-      statusCode: 401,
-      message: "Subscription not found",
-      error: error.message,
-    };
+    throw error;
   }
 
   return { teamMember, user, stripePrice, stripeCustomer };
