@@ -37,9 +37,9 @@ describe("Handler UserCanViewTeamMembers", () => {
     expect(response.json()).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          user_uuid: contextClassRef.user.user_uuid,
-          role: "owner",
-          status: "accepted",
+          "team_members*user_uuid": contextClassRef.user.user_uuid,
+          "team_members*role": "owner",
+          "team_members*status": "accepted",
         }),
       ])
     );

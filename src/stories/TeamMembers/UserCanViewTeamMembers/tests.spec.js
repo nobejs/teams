@@ -66,9 +66,9 @@ describe("Handler AnUserShouldBeAbleToGetTheirTeamMembers", () => {
     expect(result).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          user_uuid: "1098c53c-4a86-416b-b5e4-4677b70f5dfa",
-          role: "owner",
-          status: "accepted",
+          "team_members*user_uuid": "1098c53c-4a86-416b-b5e4-4677b70f5dfa",
+          "team_members*role": "owner",
+          "team_members*status": "accepted",
         }),
       ])
     );
