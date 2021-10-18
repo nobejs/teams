@@ -14,6 +14,7 @@ const prepare = async ({ req }) => {
     "price_id",
     "success_url",
     "cancelled_url",
+    "exclude_quantity",
   ]);
   payload["invoking_user_uuid"] = req.user;
   payload["token"] = req.token;
@@ -142,18 +143,28 @@ const handle = async ({ prepareResult, augmentPrepareResult }) => {
   await validateInput(prepareResult);
 
   try {
-    console.log("stripePrice", augmentPrepareResult.stripePrice);
+    let line_items = [];
+
+    if (prepareResult.exclude_quantity) {
+      line_items = [
+        {
+          price: prepareResult.price_id,
+        },
+      ];
+    } else {
+      line_items = [
+        {
+          price: prepareResult.price_id,
+          quantity: 1,
+        },
+      ];
+    }
 
     let payload = {
       customer: augmentPrepareResult["stripeCustomer"]["stripe_id"],
       mode: "subscription",
       payment_method_types: ["card"],
-      line_items: [
-        {
-          price: prepareResult.price_id,
-          quantity: 1,
-        },
-      ],
+      line_items: line_items,
       metadata: {
         team_uuid: prepareResult.team_uuid,
       },

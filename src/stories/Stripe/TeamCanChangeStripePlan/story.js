@@ -16,6 +16,7 @@ const prepare = async ({ req }) => {
     "price_id",
     "success_url",
     "cancelled_url",
+    "exclude_quantity",
   ]);
   payload["invoking_user_uuid"] = req.user;
   payload["token"] = req.token;
@@ -157,6 +158,25 @@ const handle = async ({ prepareResult, augmentPrepareResult }) => {
       augmentPrepareResult.subscription.subscription_id
     );
 
+    let line_items = [];
+
+    if (prepareResult.exclude_quantity) {
+      line_items = [
+        {
+          id: result.data[0]["id"],
+          price: prepareResult.price_id,
+        },
+      ];
+    } else {
+      line_items = [
+        {
+          id: result.data[0]["id"],
+          price: prepareResult.price_id,
+          quantity: 1,
+        },
+      ];
+    }
+
     result = await updateSubscription(
       augmentPrepareResult.subscription.subscription_id,
       {
@@ -164,13 +184,7 @@ const handle = async ({ prepareResult, augmentPrepareResult }) => {
           team_uuid: prepareResult.team_uuid,
           name: augmentPrepareResult.stripePrice["nickname"],
         },
-        items: [
-          {
-            id: result.data[0]["id"],
-            price: prepareResult.price_id,
-            quantity: 1,
-          },
-        ],
+        items: line_items,
       }
     );
     return result;
