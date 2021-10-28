@@ -59,6 +59,7 @@ module.exports = (app) => {
 
         // Tokens
 
+        ["get", "/validate-token", "Tokens/CanValidateToken"],
         ["get", "/teams/:team_uuid/tokens", "Tokens/CanViewsTokensOfTeam"],
         ["post", "/teams/:team_uuid/tokens", "Tokens/CanCreateTokenForTeam"],
         ["delete", "/teams/:team_uuid/tokens", "Tokens/CanDeleteTokenForTeam"],

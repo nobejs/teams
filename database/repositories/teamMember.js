@@ -6,6 +6,7 @@ const countAll = async (where = {}, whereNot = {}) => {
     let team_members = await knex("team_members")
       .where(where)
       .whereNot(whereNot)
+      .whereNull("deleted_at")
       .count({ count: "*" })
       .first();
     return parseInt(team_members.count);
@@ -16,7 +17,10 @@ const countAll = async (where = {}, whereNot = {}) => {
 
 const findAll = async (where = {}) => {
   try {
-    let teams = await knex("team_members").where(where).select("*");
+    let teams = await knex("team_members")
+      .where(where)
+      .whereNull("deleted_at")
+      .select("*");
     return teams;
   } catch (error) {
     throw error;
@@ -52,7 +56,10 @@ const getTeamsAndMembers = async (where = {}) => {
 
 const first = async (where = {}) => {
   try {
-    let team_members = await knex("team_members").where(where).first();
+    let team_members = await knex("team_members")
+      .where(where)
+      .whereNull("deleted_at")
+      .first();
     return team_members;
   } catch (error) {
     throw error;

@@ -1,6 +1,6 @@
 const { pathToRegexp } = require("path-to-regexp");
 
-const include = ["DELETE /teams/:team_uuid/tokens"];
+const include = ["DELETE /teams/:team_uuid/tokens", "GET /validate-token"];
 
 module.exports = (req, reply, next) => {
   let needsTeamToken = false;
