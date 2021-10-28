@@ -11,7 +11,6 @@ describe("Test Handler Tokens/CanCreateTokenForTeam", () => {
     } catch (error) {
       debugLogger(error);
     }
-    console.log(":token", token);
     expect(token).not.toBeNull();
   });
 });

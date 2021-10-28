@@ -38,7 +38,7 @@ describe("Test Handler Stripe/TeamCanSubscribeToStripePlan", () => {
     });
   });
 
-  it("user_can_subscribe_to_a_valid_price_with_exclude_quantity", async () => {
+  it.skip("user_can_subscribe_to_a_valid_price_with_exclude_quantity", async () => {
     let result = {};
     try {
       let createdTeam = await requireTestFunction("createTeamViaHandler")({
