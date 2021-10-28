@@ -47,32 +47,21 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: "yarn"
 
-      # - name: Install dependencies
-      #   run: yarn
+      - name: Install dependencies
+        run: yarn
 
-      # - name: Run tests
-      #   run: yarn test:github
-      #   env:
-      #     DB_HOST: localhost
-      #     DB_USERNAME: postgres
-      #     DB_PASSWORD: postgres
-      #     DB_NAME: postgres
-      #     DB_PORT: 5432
-      #     DB_DIALECT: postgres
-      #     DEBUG: true
-      #     PORT: 3000
-
-      - name: docker login
+      - name: Run tests
+        run: yarn test:github
         env:
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}   
-          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}  
-        run: |
-          docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_TOKEN
-
-      - name: docker build teams
-        run: |
-          docker build . -t nobejs/teams:latest
-
-      - name: docker push
-        run: |
-          docker push nobejs/teams:latest
+          DB_HOST: localhost
+          DB_USERNAME: postgres
+          DB_PASSWORD: postgres
+          DB_NAME: postgres
+          DB_PORT: 5432
+          DB_DIALECT: postgres
+          DEBUG: true
+          PORT: 3000
+          AUTH_ENDPOINT: https://api.staging.teurons.com/backend-auth
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }} 
+          QUANTITY_BASED_PRICE_ID: price_1Jl5HqI0sgPwdxJLJoAaopUJ
+          METERED_PRICE_ID: price_1JaJx5I0sgPwdxJL2u0eouZu
