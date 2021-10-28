@@ -1,5 +1,6 @@
 const Config = require("./config")();
 const httpServer = requireHttpServer();
+const tokenMiddleware = requireFunction("tokenMiddleware");
 
 const server = httpServer({
   logger: process.env.DEBUG === "true" ? false : false,
@@ -27,6 +28,8 @@ server.addContentTypeParser(
     }
   }
 );
+
+server.addHook("onRequest", tokenMiddleware);
 
 server.listen(process.env.PORT || 3000, "0.0.0.0", (err, address) => {
   if (err) {

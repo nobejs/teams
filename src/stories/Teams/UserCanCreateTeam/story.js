@@ -1,7 +1,6 @@
 const validator = requireValidator();
 const TeamRepo = requireRepo("team");
 const findKeysFromRequest = requireUtil("findKeysFromRequest");
-const TeamMemberRepo = requireRepo("teamMember");
 const TeamSerializer = requireSerializer("team");
 
 const prepare = ({ req }) => {

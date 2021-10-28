@@ -56,6 +56,12 @@ module.exports = (app) => {
           "Stripe/TeamCanChangeStripePlan",
         ],
         ["post", "/teams/stripe/webhook", "Stripe/CanHandleStripeWebhook"],
+
+        // Tokens
+
+        ["get", "/teams/:team_uuid/tokens", "Tokens/CanViewsTokensOfTeam"],
+        ["post", "/teams/:team_uuid/tokens", "Tokens/CanCreateTokenForTeam"],
+        ["delete", "/teams/:team_uuid/tokens", "Tokens/CanDeleteTokenForTeam"],
       ],
     },
   ];

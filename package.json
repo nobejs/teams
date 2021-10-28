@@ -14,9 +14,9 @@
     "start": "node server.js",
     "nobe:update": "node ./update && yarn nobe:version",
     "db": "knex",
-    "db:migrate": "knex migrate:latest",
-    "db:rollback": "knex migrate:rollback",
-    "db:migration": "knex migrate:make",
+    "db:migrate": "ENVFILE=.env knex migrate:latest",
+    "db:rollback": "ENVFILE=.env knex migrate:rollback",
+    "db:migration": "ENVFILE=.env knex migrate:make",
     "open": "lt --port 3000 --subdomain nobe"
   },
   "devDependencies": {
