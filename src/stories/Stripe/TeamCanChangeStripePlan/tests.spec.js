@@ -1,7 +1,7 @@
 const debugLogger = requireUtil("debugLogger");
 
 describe("Test Handler Stripe/TeamCanChangeStripePlan", () => {
-  it("dummy_story_which_will_pass", async () => {
+  it.skip("dummy_story_which_will_pass", async () => {
     let result = {};
     try {
       result = await testStrategy("Stripe/TeamCanChangeStripePlan", {

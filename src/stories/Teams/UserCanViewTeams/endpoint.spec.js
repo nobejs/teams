@@ -11,19 +11,12 @@ describe("Test API Teams/UserCanViewTeams", () => {
     };
   });
 
-  it("dummy_story_which_will_pass", async () => {
+  it.skip("dummy_story_which_will_pass", async () => {
     let respondResult;
     try {
       const app = httpServer();
 
       const payload = {};
-
-      // respondResult = await app.inject({
-      //   method: "POST",
-      //   url: "/api_endpoint", // This should be in endpoints.js
-      //   payload,
-      //   headers,
-      // });
     } catch (error) {
       respondResult = error;
     }
