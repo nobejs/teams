@@ -1,6 +1,5 @@
 const TeamMemberRepo = requireRepo("teamMember");
 const findKeysFromRequest = requireUtil("findKeysFromRequest");
-const TeamMemberSerializer = requireSerializer("team_member");
 
 const prepare = async ({ req }) => {
   const payload = findKeysFromRequest(req, ["team_uuid"]);

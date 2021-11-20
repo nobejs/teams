@@ -11,9 +11,9 @@ module.exports = (app) => {
     {
       endpoints: [
         // Customers
-        ["post", "/customers", "Customers/UserCanCreateCustomer"],
+        // ["post", "/customers", "Customers/UserCanCreateCustomer"],
         // ["put", "/customers/:customer_uuid", "customers/UserCanUpdateCustomer"],
-        ["get", "/customers", "Customers/UserCanViewCustomers"],
+        // ["get", "/customers", "Customers/UserCanViewCustomers"],
 
         ["get", "/teams", "Teams/UserCanViewTeams"],
         ["post", "/teams", "Teams/UserCanCreateTeam"],
@@ -22,6 +22,8 @@ module.exports = (app) => {
         ["delete", "/teams/:team_uuid", "Teams/UserCanDeleteTeam"],
 
         // Team members
+
+        ["get", "/teams/invites", "TeamMembers/UserCanViewInvites"],
 
         [
           "post",
