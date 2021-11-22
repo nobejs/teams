@@ -20,7 +20,7 @@ const augmentPrepare = async ({ prepareResult }) => {
 
     let teamMember = await TeamMemberRepo.first({
       team_uuid: prepareResult.team_uuid,
-      user_uuid: prepareResult.team_member_uuid,
+      uuid: prepareResult.team_member_uuid,
     });
 
     return { team, teamMember };
