@@ -20,7 +20,7 @@ const augmentPrepare = async ({ prepareResult }) => {
 
     let teamMember = await TeamMemberRepo.first({
       team_uuid: prepareResult.team_uuid,
-      user_uuid: prepareResult.invoking_user_uuid,
+      user_uuid: prepareResult.team_member_uuid,
     });
 
     return { team, teamMember };
@@ -33,9 +33,11 @@ const augmentPrepare = async ({ prepareResult }) => {
 };
 
 const authorize = async ({ prepareResult, augmentPrepareResult }) => {
+  // Check if this team atleast one owner before
+
   if (augmentPrepareResult.teamMember.role === "owner") {
     throw {
-      message: "Owner cannot delete themselves.",
+      message: "Owner cannot be deleted. Downgrade them to Member to delete.",
       statusCode: 422,
     };
   }
