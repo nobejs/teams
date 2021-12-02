@@ -51,10 +51,8 @@ const authorize = ({ augmentPrepareResult }) => {
   };
 };
 
-const handle = () => {
-  return {
-    message: "Can Access",
-  };
+const handle = ({ augmentPrepareResult }) => {
+  return augmentPrepareResult.tokenExists;
 };
 
 const respond = ({ handleResult }) => {
