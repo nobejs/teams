@@ -14,6 +14,14 @@ const augmentPrepare = async ({ prepareResult }) => {
     let team = await TeamRepo.first({
       uuid: prepareResult.team_uuid,
     });
+
+    if (team === undefined) {
+      throw {
+        message: "Team not found",
+        statusCode: 404,
+      };
+    }
+
     return { team };
   } catch (error) {
     throw {
